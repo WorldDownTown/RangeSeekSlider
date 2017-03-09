@@ -7,21 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CEF273E31E7023ED003AA995 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF273E21E7023ED003AA995 /* AppDelegate.swift */; };
-		CEF273E71E7023F7003AA995 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF273E61E7023F7003AA995 /* ViewController.swift */; };
+		CE3D49AF1E7121990071E992 /* RangeSeekSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* RangeSeekSlider.framework */; };
+		CE3D49B01E7121990071E992 /* RangeSeekSlider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* RangeSeekSlider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CE3D49B61E712B840071E992 /* RangeSeekSliderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D49B51E712B840071E992 /* RangeSeekSliderDelegate.swift */; };
+		CEF0136C1E72674F00DCF3D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEF273E41E7023F7003AA995 /* Assets.xcassets */; };
 		CEF273EC1E702419003AA995 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEF273E81E702405003AA995 /* LaunchScreen.storyboard */; };
 		CEF273ED1E70241B003AA995 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEF273EA1E702405003AA995 /* Main.storyboard */; };
 		CEF273EE1E702421003AA995 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF273E21E7023ED003AA995 /* AppDelegate.swift */; };
 		CEF273EF1E702424003AA995 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF273E61E7023F7003AA995 /* ViewController.swift */; };
-		CEF273F11E702A6A003AA995 /* RangeSeekSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* RangeSeekSlider.framework */; };
-		CEF273F21E702A6A003AA995 /* RangeSeekSlider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* RangeSeekSlider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		OBJ_21 /* RangeSeekSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* RangeSeekSlider.swift */; };
 		OBJ_28 /* RangeSeekSliderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* RangeSeekSliderTests.swift */; };
 		OBJ_30 /* RangeSeekSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* RangeSeekSlider.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		CEF273F31E702A6A003AA995 /* PBXContainerItemProxy */ = {
+		CE3D49B11E7121990071E992 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
@@ -38,13 +38,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		CEF273F51E702A6A003AA995 /* Embed Frameworks */ = {
+		CE3D49B41E7121990071E992 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CEF273F21E702A6A003AA995 /* RangeSeekSlider.framework in Embed Frameworks */,
+				CE3D49B01E7121990071E992 /* RangeSeekSlider.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -52,6 +52,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CE3D49B51E712B840071E992 /* RangeSeekSliderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSeekSliderDelegate.swift; sourceTree = "<group>"; };
+		CE3D49B81E71409A0071E992 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CE9937551E70236800EA982A /* RangeSeekSliderDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RangeSeekSliderDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF273E21E7023ED003AA995 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Demo/RangeSeekSliderDemo/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		CEF273E41E7023F7003AA995 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Demo/RangeSeekSliderDemo/Assets.xcassets; sourceTree = SOURCE_ROOT; };
@@ -66,11 +68,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		CE9937521E70236800EA982A /* Frameworks */ = {
+		CE3D49B31E7121990071E992 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEF273F11E702A6A003AA995 /* RangeSeekSlider.framework in Frameworks */,
+				CE3D49AF1E7121990071E992 /* RangeSeekSlider.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +94,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE3D49B71E7140990071E992 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CE3D49B81E71409A0071E992 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CE9937561E70236800EA982A /* RangeSeekSliderDemo */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +158,7 @@
 				OBJ_10 /* Tests */,
 				CEFF01CA1E701BB400C1C4F5 /* Demo */,
 				OBJ_13 /* Products */,
+				CE3D49B71E7140990071E992 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -163,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_9 /* RangeSeekSlider.swift */,
+				CE3D49B51E712B840071E992 /* RangeSeekSliderDelegate.swift */,
 			);
 			name = RangeSeekSlider;
 			path = Sources;
@@ -176,14 +188,14 @@
 			buildConfigurationList = CE9937641E70236800EA982A /* Build configuration list for PBXNativeTarget "RangeSeekSliderDemo" */;
 			buildPhases = (
 				CE9937511E70236800EA982A /* Sources */,
-				CE9937521E70236800EA982A /* Frameworks */,
 				CE9937531E70236800EA982A /* Resources */,
-				CEF273F51E702A6A003AA995 /* Embed Frameworks */,
+				CE3D49B31E7121990071E992 /* Frameworks */,
+				CE3D49B41E7121990071E992 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				CEF273F41E702A6A003AA995 /* PBXTargetDependency */,
+				CE3D49B21E7121990071E992 /* PBXTargetDependency */,
 			);
 			name = RangeSeekSliderDemo;
 			productName = RangeSeekSliderDemo;
@@ -234,14 +246,14 @@
 				TargetAttributes = {
 					CE9937541E70236800EA982A = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = CHLXNV2U55;
+						DevelopmentTeam = S3LY459S86;
 						ProvisioningStyle = Automatic;
 					};
 					OBJ_16 = {
-						DevelopmentTeam = CHLXNV2U55;
 						ProvisioningStyle = Automatic;
 					};
 					OBJ_23 = {
+						DevelopmentTeam = S3LY459S86;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -271,6 +283,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEF0136C1E72674F00DCF3D9 /* Assets.xcassets in Resources */,
 				CEF273EC1E702419003AA995 /* LaunchScreen.storyboard in Resources */,
 				CEF273ED1E70241B003AA995 /* Main.storyboard in Resources */,
 			);
@@ -292,9 +305,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				CEF273E71E7023F7003AA995 /* ViewController.swift in Sources */,
-				CEF273E31E7023ED003AA995 /* AppDelegate.swift in Sources */,
 				OBJ_21 /* RangeSeekSlider.swift in Sources */,
+				CE3D49B61E712B840071E992 /* RangeSeekSliderDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,10 +321,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		CEF273F41E702A6A003AA995 /* PBXTargetDependency */ = {
+		CE3D49B21E7121990071E992 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = OBJ_16 /* RangeSeekSlider */;
-			targetProxy = CEF273F31E702A6A003AA995 /* PBXContainerItemProxy */;
+			targetProxy = CE3D49B11E7121990071E992 /* PBXContainerItemProxy */;
 		};
 		OBJ_31 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -366,7 +378,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = CHLXNV2U55;
+				DEVELOPMENT_TEAM = S3LY459S86;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -419,7 +431,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = CHLXNV2U55;
+				DEVELOPMENT_TEAM = S3LY459S86;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -447,7 +459,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = CHLXNV2U55;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -470,7 +482,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = CHLXNV2U55;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -492,7 +504,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = S3LY459S86;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -511,7 +523,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = S3LY459S86;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
