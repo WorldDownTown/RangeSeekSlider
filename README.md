@@ -1,5 +1,7 @@
 # RangeSeekSlider
 
+[![Join the chat at https://gitter.im/WorldDownTown/RangeSeekSlider](https://badges.gitter.im/WorldDownTown/RangeSeekSlider.svg)](https://gitter.im/WorldDownTown/RangeSeekSlider?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![License](https://img.shields.io/:license-mit-blue.svg)](https://doge.mit-license.org)
 [![Language](https://img.shields.io/badge/language-swift-orange.svg?style=flat)](https://developer.apple.com/swift)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
