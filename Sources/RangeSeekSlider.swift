@@ -67,32 +67,6 @@ import UIKit
         }
     }
 
-    /// Each handle in the slider has a label above it showing the current selected value. By default, this is displayed as a decimal format.
-    /// You can update this default here by updating NumberFormatter properties. For example, you could supply a currency style, or a prefix or suffix.
-    public let numberFormatter: NumberFormatter = {
-        let formatter: NumberFormatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 0
-        return formatter
-    }()
-
-    /// Hides the labels above the slider controls. true = labels will be hidden. false = labels will be shown. Default is false.
-    @IBInspectable public var hideLabels: Bool = false
-
-    /// The color of the minimum value text label. If not set, the default is the tintColor.
-    @IBInspectable public var minLabelColor: UIColor? {
-        didSet {
-            minLabel.foregroundColor = minLabelColor?.cgColor
-        }
-    }
-
-    /// The color of the maximum value text label. If not set, the default is the tintColor.
-    @IBInspectable public var maxLabelColor: UIColor? {
-        didSet {
-            maxLabel.foregroundColor = maxLabelColor?.cgColor
-        }
-    }
-
     /// The font of the minimum value text label. If not set, the default is system font size 12.0.
     public var minLabelFont: UIFont = UIFont.systemFont(ofSize: 12.0) {
         didSet {
@@ -109,56 +83,49 @@ import UIKit
         }
     }
 
-    /// The label displayed in accessibility mode for minimum value handler. If not set, the default is empty String.
-    @IBInspectable public var minLabelAccessibilityLabel: String = "Left Handle"
+    /// Each handle in the slider has a label above it showing the current selected value. By default, this is displayed as a decimal format.
+    /// You can update this default here by updating properties of NumberFormatter. For example, you could supply a currency style, or a prefix or suffix.
+    public let numberFormatter: NumberFormatter = {
+        let formatter: NumberFormatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        return formatter
+    }()
 
-    /// The label displayed in accessibility mode for maximum value handler. If not set, the default is empty String.
-    @IBInspectable public var maxLabelAccessibilityLabel: String = "Right Handle"
+    /// Hides the labels above the slider controls. true = labels will be hidden. false = labels will be shown. Default is false.
+    @IBInspectable public var hideLabels: Bool = false
 
-    /// The brief description displayed in accessibility mode for minimum value handler. If not set, the default is empty String.
-    @IBInspectable public var minLabelAccessibilityHint: String = "Minimum value in slider"
+    /// The minimum distance the two selected slider values must be apart. Default is 0.
 
-    /// The brief description displayed in accessibility mode for maximum value handler. If not set, the default is empty String.
-    @IBInspectable public var maxLabelAccessibilityHint: String = "Maximum value in slider"
-
-    /// If true, the control will mimic a normal slider and have only one handle rather than a range.
-    /// In this case, the selectedMinValue will be not functional anymore. Use selectedMaxValue instead to determine the value the user has selected.
-    @IBInspectable public var disableRange: Bool = false {
+    @IBInspectable public var minDistance: CGFloat = 0.0 {
         didSet {
-            leftHandle.isHidden = disableRange
-            minLabel.isHidden = disableRange
+            if minDistance < 0.0 {
+                minDistance = 0.0
+            }
         }
     }
 
-    @IBInspectable public var minDistance: CGFloat = 0.0
+    /// The maximum distance the two selected slider values must be apart. Default is CGFloat.greatestFiniteMagnitude.
 
-    @IBInspectable public var maxDistance: CGFloat = .greatestFiniteMagnitude
-
-    /// If true the control will snap to point at each step between minValue and maxValue. Default is false.
-    @IBInspectable public var enableStep: Bool = false
-
-    /// The step value, this control the value of each step. If not set the default is 0.0.
-    /// (note: this is ignored if <= 0.0)
-    @IBInspectable public var step: CGFloat = 0.0
-
-    /// Set padding between label and handle (default 8.0)
-    @IBInspectable public var labelPadding: CGFloat = 8.0 {
+    @IBInspectable public var maxDistance: CGFloat = .greatestFiniteMagnitude {
         didSet {
-            updateLabelPositions()
+            if maxDistance < 0.0 {
+                maxDistance = .greatestFiniteMagnitude
+            }
         }
     }
 
-    /// Handle slider with custom image, you can set custom image for your handle
-    @IBInspectable public var handleImage: UIImage? {
+    /// The color of the minimum value text label. If not set, the default is the tintColor.
+    @IBInspectable public var minLabelColor: UIColor? {
         didSet {
-            let startFrame: CGRect = CGRect(x: 0.0, y: 0.0, width: 32.0, height: 32.0)
-            leftHandle.frame = startFrame
-            leftHandle.contents = handleImage?.cgImage
-            leftHandle.backgroundColor = UIColor.clear.cgColor
+            minLabel.foregroundColor = minLabelColor?.cgColor
+        }
+    }
 
-            rightHandle.frame = startFrame
-            rightHandle.contents = handleImage?.cgImage
-            rightHandle.backgroundColor = UIColor.clear.cgColor
+    /// The color of the maximum value text label. If not set, the default is the tintColor.
+    @IBInspectable public var maxLabelColor: UIColor? {
+        didSet {
+            maxLabel.foregroundColor = maxLabelColor?.cgColor
         }
     }
 
@@ -178,11 +145,40 @@ import UIKit
         }
     }
 
-    /// Handle border width (default 0.0)
-    @IBInspectable public var handleBorderWidth: CGFloat = 0.0 {
+    /// Set slider line tint color between handles
+    @IBInspectable public var colorBetweenHandles: UIColor? {
         didSet {
-            leftHandle.borderWidth = handleBorderWidth
-            rightHandle.borderWidth = handleBorderWidth
+            sliderLineBetweenHandles.backgroundColor = colorBetweenHandles?.cgColor
+        }
+    }
+
+    /// If true, the control will mimic a normal slider and have only one handle rather than a range.
+    /// In this case, the selectedMinValue will be not functional anymore. Use selectedMaxValue instead to determine the value the user has selected.
+    @IBInspectable public var disableRange: Bool = false {
+        didSet {
+            leftHandle.isHidden = disableRange
+            minLabel.isHidden = disableRange
+        }
+    }
+
+    /// If true the control will snap to point at each step between minValue and maxValue. Default is false.
+    @IBInspectable public var enableStep: Bool = false
+
+    /// The step value, this control the value of each step. If not set the default is 0.0.
+    /// (note: this is ignored if <= 0.0)
+    @IBInspectable public var step: CGFloat = 0.0
+
+    /// Handle slider with custom image, you can set custom image for your handle
+    @IBInspectable public var handleImage: UIImage? {
+        didSet {
+            let startFrame: CGRect = CGRect(x: 0.0, y: 0.0, width: 32.0, height: 32.0)
+            leftHandle.frame = startFrame
+            leftHandle.contents = handleImage?.cgImage
+            leftHandle.backgroundColor = UIColor.clear.cgColor
+
+            rightHandle.frame = startFrame
+            rightHandle.contents = handleImage?.cgImage
+            rightHandle.backgroundColor = UIColor.clear.cgColor
         }
     }
 
@@ -199,19 +195,39 @@ import UIKit
     /// Selected handle diameter multiplier (default 1.7)
     @IBInspectable public var selectedHandleDiameterMultiplier: CGFloat = 1.7
 
-    /// Set slider line tint color between handles
-    @IBInspectable public var colorBetweenHandles: UIColor? {
-        didSet {
-            sliderLineBetweenHandles.backgroundColor = colorBetweenHandles?.cgColor
-        }
-    }
-
     /// Set the slider line height (default 1.0)
     @IBInspectable public var lineHeight: CGFloat = 1.0 {
         didSet {
             setNeedsLayout()
         }
     }
+
+    /// Handle border width (default 0.0)
+    @IBInspectable public var handleBorderWidth: CGFloat = 0.0 {
+        didSet {
+            leftHandle.borderWidth = handleBorderWidth
+            rightHandle.borderWidth = handleBorderWidth
+        }
+    }
+
+    /// Set padding between label and handle (default 8.0)
+    @IBInspectable public var labelPadding: CGFloat = 8.0 {
+        didSet {
+            updateLabelPositions()
+        }
+    }
+
+    /// The label displayed in accessibility mode for minimum value handler. If not set, the default is empty String.
+    @IBInspectable public var minLabelAccessibilityLabel: String?
+
+    /// The label displayed in accessibility mode for maximum value handler. If not set, the default is empty String.
+    @IBInspectable public var maxLabelAccessibilityLabel: String?
+
+    /// The brief description displayed in accessibility mode for minimum value handler. If not set, the default is empty String.
+    @IBInspectable public var minLabelAccessibilityHint: String?
+
+    /// The brief description displayed in accessibility mode for maximum value handler. If not set, the default is empty String.
+    @IBInspectable public var maxLabelAccessibilityHint: String?
 
 
     // MARK: - private stored properties

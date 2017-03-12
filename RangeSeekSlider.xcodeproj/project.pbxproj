@@ -10,6 +10,8 @@
 		CE3D49AF1E7121990071E992 /* RangeSeekSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* RangeSeekSlider.framework */; };
 		CE3D49B01E7121990071E992 /* RangeSeekSlider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* RangeSeekSlider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CE3D49B61E712B840071E992 /* RangeSeekSliderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D49B51E712B840071E992 /* RangeSeekSliderDelegate.swift */; };
+		CED789241E75A57B00900B25 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED789231E75A57B00900B25 /* CoreGraphics.framework */; };
+		CED789261E75A58100900B25 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED789251E75A58100900B25 /* UIKit.framework */; };
 		CEF0136C1E72674F00DCF3D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEF273E41E7023F7003AA995 /* Assets.xcassets */; };
 		CEF273EC1E702419003AA995 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEF273E81E702405003AA995 /* LaunchScreen.storyboard */; };
 		CEF273ED1E70241B003AA995 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEF273EA1E702405003AA995 /* Main.storyboard */; };
@@ -55,6 +57,8 @@
 		CE3D49B51E712B840071E992 /* RangeSeekSliderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSeekSliderDelegate.swift; sourceTree = "<group>"; };
 		CE3D49B81E71409A0071E992 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CE9937551E70236800EA982A /* RangeSeekSliderDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RangeSeekSliderDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CED789231E75A57B00900B25 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		CED789251E75A58100900B25 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CEF273E21E7023ED003AA995 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Demo/RangeSeekSliderDemo/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		CEF273E41E7023F7003AA995 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Demo/RangeSeekSliderDemo/Assets.xcassets; sourceTree = SOURCE_ROOT; };
 		CEF273E51E7023F7003AA995 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Demo/RangeSeekSliderDemo/Info.plist; sourceTree = SOURCE_ROOT; };
@@ -80,6 +84,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
+				CED789241E75A57B00900B25 /* CoreGraphics.framework in Frameworks */,
+				CED789261E75A58100900B25 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,6 +103,8 @@
 		CE3D49B71E7140990071E992 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CED789251E75A58100900B25 /* UIKit.framework */,
+				CED789231E75A57B00900B25 /* CoreGraphics.framework */,
 				CE3D49B81E71409A0071E992 /* Foundation.framework */,
 			);
 			name = Frameworks;
