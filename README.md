@@ -6,6 +6,7 @@
 [![Language](https://img.shields.io/badge/language-swift-orange.svg?style=flat)](https://developer.apple.com/swift)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods compatible](https://img.shields.io/cocoapods/v/RangeSeekSlider.svg?style=flat)](http://cocoadocs.org/docsets/RangeSeekSlider/)
+[![Downloads with CocoaPods](https://img.shields.io/cocoapods/dt/RangeSeekSlider.svg)](http://cocoadocs.org/docsets/RangeSeekSlider/)
 
 ## Overview
 `RangeSeedSlider` provides a customizable range slider like a UISlider.

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                  = 'RangeSeekSlider'
-  s.version               = '1.0.2'
+  s.version               = '1.0.3'
   s.summary               = 'RangeSeedSlider provides a customizable range slider like a UISlider.'
   s.description           = <<-DESC
                             RangeSeedSlider provides a customizable range slider like a UISlider.
