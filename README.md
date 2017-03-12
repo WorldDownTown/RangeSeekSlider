@@ -8,7 +8,7 @@
 
 ## Overview
 `RangeSeedSlider` provides a customizable range slider like a UISlider.
-This library based on [TomThorpe/RangeSeekSlider](https://github.com/TomThorpe/RangeSeekSlider) (Objective-C) and made with Swift.
+This library based on [TomThorpe/TTRangeSlider](https://github.com/TomThorpe/TTRangeSlider) (Objective-C) and made with Swift.
 
 ![demo](images/demo.gif)
 
