@@ -34,6 +34,7 @@ public protocol RangeSeekSliderDelegate: class {
 
 public extension RangeSeekSliderDelegate {
 
+    func rangeSeekSlider(_ slider: RangeSeekSlider, didChange minValue: CGFloat, maxValue: CGFloat) {}
     func didStartTouches(in slider: RangeSeekSlider) {}
     func didEndTouches(in slider: RangeSeekSlider) {}
 }
