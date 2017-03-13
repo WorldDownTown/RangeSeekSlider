@@ -145,6 +145,14 @@ RangeSeekSlider is available through [Carthage](https://github.com/Carthage/Cart
 github "WorldDownTown/RangeSeekSlider"
 ```
 
+#### ⚠️Warning⚠️
+When installed with Carthage, `@IBDesignable` can't be available ([Carthage Issue](https://github.com/Carthage/Carthage/issues/335)). But we have a workaround is shown in [Stack Overflow](http://stackoverflow.com/a/37631860/1835227). It is able to use `@IBDesignable` by subclassing `RangeSeekSlider`.
+
+```swift
+@IBDesignable class ChildRangeSeekSlider: RangeSeedSlider {}
+```
+
+
 ### CocoaPods
 RangeSeekSlider is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your Podfile:
 
