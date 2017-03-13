@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE1967FE1E7668A300DBAE72 /* RangeSeekSlider.swift in Headers */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* RangeSeekSlider.swift */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE3D49AF1E7121990071E992 /* RangeSeekSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* RangeSeekSlider.framework */; };
 		CE3D49B01E7121990071E992 /* RangeSeekSlider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* RangeSeekSlider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CE3D49B61E712B840071E992 /* RangeSeekSliderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D49B51E712B840071E992 /* RangeSeekSliderDelegate.swift */; };
@@ -190,6 +191,17 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		CE1967FD1E76688F00DBAE72 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE1967FE1E7668A300DBAE72 /* RangeSeekSlider.swift in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		CE9937541E70236800EA982A /* RangeSeekSliderDemo */ = {
 			isa = PBXNativeTarget;
@@ -216,6 +228,7 @@
 			buildPhases = (
 				OBJ_20 /* Sources */,
 				OBJ_22 /* Frameworks */,
+				CE1967FD1E76688F00DBAE72 /* Headers */,
 			);
 			buildRules = (
 			);
