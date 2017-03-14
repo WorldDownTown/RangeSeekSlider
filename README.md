@@ -16,7 +16,7 @@ This library is based on [TomThorpe/TTRangeSlider](https://github.com/TomThorpe/
 ![demo](images/demo.gif)
 
 ## Demo
-You can try on [Appetize.io](https://appetize.io/app/e5efvebtfp8750wmmvg2jh3emw)
+You can try on [Appetize.io](https://appetize.io/app/pna3vjqbzjvt0t9c8cgxykg380)
 
 or
 
