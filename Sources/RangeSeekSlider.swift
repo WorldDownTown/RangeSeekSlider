@@ -232,13 +232,14 @@ import UIKit
 
     // MARK: - private stored properties
 
+    private enum HandleTracking { case none, left, right }
+    private var handleTracking: HandleTracking = .none
+
     private let sliderLine: CALayer = CALayer()
     private let sliderLineBetweenHandles: CALayer = CALayer()
 
     private let leftHandle: CALayer = CALayer()
-    private var leftHandleSelected: Bool = false
     private let rightHandle: CALayer = CALayer()
-    private var rightHandleSelected: Bool = false
 
     fileprivate let minLabel: CATextLayer = CATextLayer()
     fileprivate let maxLabel: CATextLayer = CATextLayer()
@@ -281,7 +282,7 @@ import UIKit
     open override func layoutSubviews() {
         super.layoutSubviews()
 
-        if !leftHandleSelected && !rightHandleSelected {
+        if handleTracking == .none {
             updateLineHeight()
             updateLabelValues()
             updateHandlePositions()
@@ -341,15 +342,14 @@ import UIKit
         let distanceFromRightHandle: CGFloat = touchLocation.distance(to: rightHandle.frame.center)
 
         if distanceFromLeftHandle < distanceFromRightHandle && !disableRange {
-            leftHandleSelected = true
-            animate(handle: leftHandle, selected: true)
+            handleTracking = .left
         } else if selectedMaxValue == maxValue && leftHandle.frame.center.x == rightHandle.frame.center.x {
-            leftHandleSelected = true
-            animate(handle: leftHandle, selected: true)
+            handleTracking = .left
         } else {
-            rightHandleSelected = true
-            animate(handle: rightHandle, selected: true)
+            handleTracking = .right
         }
+        let handle: CALayer = (handleTracking == .left) ? leftHandle : rightHandle
+        animate(handle: handle, selected: true)
 
         delegate?.didStartTouches(in: self)
 
@@ -357,6 +357,8 @@ import UIKit
     }
 
     open override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        guard handleTracking != .none else { return false }
+
         let location: CGPoint = touch.location(in: self)
 
         // find out the percentage along the line we are in x coordinate terms (subtracting half the frames width to account for moving the middle of the handle, not the left hand side)
@@ -365,32 +367,31 @@ import UIKit
         // multiply that percentage by self.maxValue to get the new selected minimum value
         let selectedValue: CGFloat = percentage * (maxValue - minValue) + minValue
 
-        if leftHandleSelected {
+        switch handleTracking {
+        case .left:
             selectedMinValue = min(selectedValue, selectedMaxValue)
-            refresh()
-        } else if rightHandleSelected {
+        case .right:
             // don't let the dots cross over, (unless range is disabled, in which case just dont let the dot fall off the end of the screen)
             if disableRange && selectedValue >= minValue {
                 selectedMaxValue = selectedValue
             } else {
                 selectedMaxValue = max(selectedValue, selectedMinValue)
             }
-            refresh()
-        } else {
+        case .none:
             // no need to refresh the view because it is done as a side-effect of setting the property
+            break
         }
+
+        refresh()
 
         return true
     }
 
     open override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
-        if leftHandleSelected {
-            leftHandleSelected = false
-            animate(handle: leftHandle, selected: false)
-        } else {
-            rightHandleSelected = false
-            animate(handle: rightHandle, selected: false)
-        }
+        let handle: CALayer = (handleTracking == .left) ? leftHandle : rightHandle
+        animate(handle: handle, selected: false)
+        handleTracking = .none
+
         delegate?.didEndTouches(in: self)
     }
 
@@ -603,16 +604,22 @@ import UIKit
         let diff: CGFloat = selectedMaxValue - selectedMinValue
 
         if diff < minDistance {
-            if leftHandleSelected {
+            switch handleTracking {
+            case .left:
                 selectedMinValue = selectedMaxValue - minDistance
-            } else {
+            case .right:
                 selectedMaxValue = selectedMinValue + minDistance
+            case .none:
+                break
             }
         } else if diff > maxDistance {
-            if leftHandleSelected {
+            switch handleTracking {
+            case .left:
                 selectedMinValue = selectedMaxValue - maxDistance
-            } else if rightHandleSelected {
+            case .right:
                 selectedMaxValue = selectedMinValue + maxDistance
+            case .none:
+                break
             }
         }
 
@@ -635,7 +642,7 @@ import UIKit
         updateAccessibilityElements()
 
         // update the delegate
-        if let delegate = delegate, leftHandleSelected || rightHandleSelected {
+        if let delegate = delegate, handleTracking != .none {
             delegate.rangeSeekSlider(self, didChange: selectedMinValue, maxValue: selectedMaxValue)
         }
     }

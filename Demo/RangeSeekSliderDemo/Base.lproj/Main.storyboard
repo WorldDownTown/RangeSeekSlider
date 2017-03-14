@@ -161,7 +161,7 @@
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gdz-ut-dL8" customClass="RangeSeekSlider" customModule="RangeSeekSlider">
                                         <rect key="frame" x="16" y="631" width="343" height="65"/>
-                                        <color key="tintColor" red="0.94509803920000002" green="0.32156862749999998" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="tintColor" red="0.86666666670000003" green="0.86666666670000003" blue="0.86666666670000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="65" id="wa9-1w-B3f"/>
                                         </constraints>

@@ -73,16 +73,24 @@ final class ViewController: UIViewController {
         rangeSliderCustomString.selectedMinValue = 0
         rangeSliderCustomString.selectedMaxValue = CGFloat(prices.count - 1)
         rangeSliderCustomString.minDistance = 1.0
+        rangeSliderCustomString.handleColor = #colorLiteral(red: 0.9654981494, green: 0.4302981198, blue: 0.698961854, alpha: 1)
+        rangeSliderCustomString.minLabelColor = #colorLiteral(red: 0.9654981494, green: 0.4302981198, blue: 0.698961854, alpha: 1)
+        rangeSliderCustomString.maxLabelColor = #colorLiteral(red: 0.9654981494, green: 0.4302981198, blue: 0.698961854, alpha: 1)
+        rangeSliderCustomString.colorBetweenHandles = #colorLiteral(red: 0.9654981494, green: 0.4302981198, blue: 0.698961854, alpha: 1)
+        rangeSliderCustomString.tintColor = #colorLiteral(red: 0.8666666667, green: 0.8666666667, blue: 0.8666666667, alpha: 1)
+        rangeSliderCustomString.numberFormatter.locale = Locale.current
+        rangeSliderCustomString.numberFormatter.numberStyle = .currency
     }
 
-    fileprivate func priceString(value: CGFloat) -> String {
+    fileprivate func priceString(value: CGFloat, numberFormatter: NumberFormatter) -> String {
         let index: Int = Int(roundf(Float(value)))
         if index == 0 {
             return "Min"
         } else if index == prices.count - 1 {
             return "Max"
         } else {
-            return "\(prices[index])"
+            let priceString: String? = numberFormatter.string(from: prices[index] as NSNumber)
+            return priceString ?? ""
         }
     }
 }
@@ -113,12 +121,12 @@ extension ViewController: RangeSeekSliderDelegate {
     func rangeSeekSlider(_ slider: RangeSeekSlider, stringForMinValue minValue: CGFloat) -> String? {
         guard slider == rangeSliderCustomString else { return nil }
 
-        return priceString(value: minValue)
+        return priceString(value: minValue, numberFormatter: rangeSliderCustomString.numberFormatter)
     }
 
     func rangeSeekSlider(_ slider: RangeSeekSlider, stringForMaxValue maxValue: CGFloat) -> String? {
         guard slider == rangeSliderCustomString else { return nil }
 
-        return priceString(value: maxValue)
+        return priceString(value: maxValue, numberFormatter: rangeSliderCustomString.numberFormatter)
     }
 }
