@@ -68,7 +68,10 @@ The font of the maximum value text label. If not set, the default is system font
 Each handle in the slider has a label above it showing the current selected value. If you change number format, update each properties of `NumberFormatter`. By default, this is displayed as a decimal format.
 
 #### `hideLabels`
-When set to `true` the labels above the slider controls will be hidden. Default is false.
+When set to `true` the labels above the slider controls will be hidden. Default is `false`.
+
+#### `labelsFixed`
+Fixes the labels above the slider controls. If `true`, labels will be fixed to both ends. Otherwise labels will move with the handles. Default is `false`.
 
 #### `minDistance`
 The minimum distance the two selected slider values must be apart. Default is `0.0`.
@@ -95,15 +98,15 @@ If set it will update the color of the handle borders. Default is `tintColor`.
 The color of the entire slider when the handle is set to the minimum value and the maximum value. Default is nil.
 
 #### `disableRange`
-If true, the control will mimic a normal slider and have only one handle rather than a range.
+If `true`, the control will mimic a normal slider and have only one handle rather than a range.
 
 In this case, the selectedMinValue will be not functional anymore. Use selectedMaxValue instead to determine the value the user has selected.
 
 #### `enableStep`
-If true the control will snap to point at each `step` (property) between minValue and maxValue. Default value is disabled.
+If `true` the control will snap to point at each `step` (property) between minValue and maxValue. Default value is disabled.
 
 #### `step`
-If `enableStep` is true, this controls the value of each step. E.g. if this value is 20, the control will snap to values 20,40,60...etc. Set this is you enable the `enableStep` property.
+If `enableStep` is `true`, this controls the value of each step. E.g. if this value is 20, the control will snap to values 20,40,60...etc. Set this is you enable the `enableStep` property.
 
 #### `handleImage`
 If set the image passed will be used for the handles.

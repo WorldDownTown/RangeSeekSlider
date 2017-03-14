@@ -80,6 +80,7 @@ final class ViewController: UIViewController {
         rangeSliderCustomString.tintColor = #colorLiteral(red: 0.8666666667, green: 0.8666666667, blue: 0.8666666667, alpha: 1)
         rangeSliderCustomString.numberFormatter.locale = Locale.current
         rangeSliderCustomString.numberFormatter.numberStyle = .currency
+        rangeSliderCustomString.labelsFixed = true
         rangeSliderCustomString.initialColor = #colorLiteral(red: 0.8666666667, green: 0.8666666667, blue: 0.8666666667, alpha: 1)
     }
 

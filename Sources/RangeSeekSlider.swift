@@ -34,10 +34,18 @@ import UIKit
     public weak var delegate: RangeSeekSliderDelegate?
 
     /// The minimum possible value to select in the range
-    @IBInspectable public var minValue: CGFloat = 0.0
+    @IBInspectable public var minValue: CGFloat = 0.0 {
+        didSet {
+            refresh()
+        }
+    }
 
     /// The maximum possible value to select in the range
-    @IBInspectable public var maxValue: CGFloat = 100.0
+    @IBInspectable public var maxValue: CGFloat = 100.0 {
+        didSet {
+            refresh()
+        }
+    }
 
     /// The preselected minumum value
     /// (note: This should be less than the selectedMaxValue)
@@ -85,7 +93,15 @@ import UIKit
     }()
 
     /// Hides the labels above the slider controls. true = labels will be hidden. false = labels will be shown. Default is false.
-    @IBInspectable public var hideLabels: Bool = false
+    @IBInspectable public var hideLabels: Bool = false {
+        didSet {
+            minLabel.isHidden = hideLabels
+            maxLabel.isHidden = hideLabels
+        }
+    }
+
+    /// fixes the labels above the slider controls. true: labels will be fixed to both ends. false: labels will move with the handles. Default is false.
+    @IBInspectable public var labelsFixed: Bool = false
 
     /// The minimum distance the two selected slider values must be apart. Default is 0.
     @IBInspectable public var minDistance: CGFloat = 0.0 {
@@ -437,11 +453,8 @@ import UIKit
     }
 
     private func updateLabelValues() {
-        if hideLabels {
-            minLabel.string = nil
-            maxLabel.string = nil
-            return
-        }
+        minLabel.isHidden = hideLabels
+        maxLabel.isHidden = hideLabels
 
         if let replacedString = delegate?.rangeSeekSlider(self, stringForMinValue: selectedMinValue) {
             minLabel.string = replacedString
@@ -517,6 +530,15 @@ import UIKit
 
     private func updateLabelPositions() {
         // the center points for the labels are X = the same x position as the relevant handle. Y = the y position of the handle minus half the height of the text label, minus some padding.
+
+        minLabel.frame.size = minLabelTextSize
+        maxLabel.frame.size = maxLabelTextSize
+
+        if labelsFixed {
+            updateFixedLabelPositions()
+            return
+        }
+
         let minSpacingBetweenLabels: CGFloat = 8.0
 
         let newMinLabelCenter: CGPoint = CGPoint(x: leftHandle.frame.midX,
@@ -524,9 +546,6 @@ import UIKit
 
         let newMaxLabelCenter: CGPoint = CGPoint(x: rightHandle.frame.midX,
                                                  y: rightHandle.frame.minY - (maxLabelTextSize.height / 2.0) - labelPadding)
-
-        minLabel.frame.size = minLabelTextSize
-        maxLabel.frame.size = maxLabelTextSize
 
         let newLeftMostXInMaxLabel: CGFloat = newMaxLabelCenter.x - maxLabelTextSize.width / 2.0
         let newRightMostXInMinLabel: CGFloat = newMinLabelCenter.x + minLabelTextSize.width / 2.0
@@ -563,6 +582,20 @@ import UIKit
                 maxLabel.frame.origin.x = frame.width - maxLabel.frame.width
                 minLabel.frame.origin.x = maxLabel.frame.origin.x - minSpacingBetweenLabels - minLabel.frame.width
             }
+        }
+    }
+
+    private func updateFixedLabelPositions() {
+        minLabel.position = CGPoint(x: xPositionAlongLine(for: minValue),
+                                    y: sliderLine.frame.minY - (minLabelTextSize.height / 2.0) - (handleDiameter / 2.0) - labelPadding)
+        maxLabel.position = CGPoint(x: xPositionAlongLine(for: maxValue),
+                                    y: sliderLine.frame.minY - (maxLabelTextSize.height / 2.0) - (handleDiameter / 2.0) - labelPadding)
+        if minLabel.frame.minX < 0.0 {
+            minLabel.frame.origin.x = 0.0
+        }
+
+        if maxLabel.frame.maxX > frame.width {
+            maxLabel.frame.origin.x = frame.width - maxLabel.frame.width
         }
     }
 
