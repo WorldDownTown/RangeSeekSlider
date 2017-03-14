@@ -85,12 +85,13 @@ final class ViewController: UIViewController {
 
     fileprivate func priceString(value: CGFloat, numberFormatter: NumberFormatter) -> String {
         let index: Int = Int(roundf(Float(value)))
-        if index == 0 {
+        let price: Int = prices[index]
+        if price == .min {
             return "Min"
-        } else if index == prices.count - 1 {
+        } else if price == .max {
             return "Max"
         } else {
-            let priceString: String? = numberFormatter.string(from: prices[index] as NSNumber)
+            let priceString: String? = numberFormatter.string(from: price as NSNumber)
             return priceString ?? ""
         }
     }

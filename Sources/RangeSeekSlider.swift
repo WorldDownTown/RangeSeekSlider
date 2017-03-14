@@ -282,7 +282,7 @@ import UIKit
 
         if distanceFromLeftHandle < distanceFromRightHandle && !disableRange {
             handleTracking = .left
-        } else if selectedMaxValue == maxValue && leftHandle.frame.center.x == rightHandle.frame.center.x {
+        } else if selectedMaxValue == maxValue && leftHandle.frame.midX == rightHandle.frame.midX {
             handleTracking = .left
         } else {
             handleTracking = .right
@@ -519,16 +519,14 @@ import UIKit
         // the center points for the labels are X = the same x position as the relevant handle. Y = the y position of the handle minus half the height of the text label, minus some padding.
         let minSpacingBetweenLabels: CGFloat = 8.0
 
-        let leftHandleCenter: CGPoint = leftHandle.frame.center
-        let newMinLabelCenter: CGPoint = CGPoint(x: leftHandleCenter.x,
-                                                 y: leftHandle.frame.minY - (minLabel.frame.height / 2.0) - labelPadding)
+        let newMinLabelCenter: CGPoint = CGPoint(x: leftHandle.frame.midX,
+                                                 y: leftHandle.frame.minY - (minLabelTextSize.height / 2.0) - labelPadding)
 
-        let rightHandleCenter: CGPoint = rightHandle.frame.center
-        let newMaxLabelCenter: CGPoint = CGPoint(x :rightHandleCenter.x,
-                                                 y: rightHandle.frame.minY - (maxLabel.frame.height / 2.0) - labelPadding)
+        let newMaxLabelCenter: CGPoint = CGPoint(x: rightHandle.frame.midX,
+                                                 y: rightHandle.frame.minY - (maxLabelTextSize.height / 2.0) - labelPadding)
 
-        minLabel.frame = CGRect(origin: .zero, size: minLabelTextSize)
-        maxLabel.frame = CGRect(origin: .zero, size: maxLabelTextSize)
+        minLabel.frame.size = minLabelTextSize
+        maxLabel.frame.size = maxLabelTextSize
 
         let newLeftMostXInMaxLabel: CGFloat = newMaxLabelCenter.x - maxLabelTextSize.width / 2.0
         let newRightMostXInMinLabel: CGFloat = newMinLabelCenter.x + minLabelTextSize.width / 2.0
@@ -537,6 +535,14 @@ import UIKit
         if disableRange || newSpacingBetweenTextLabels > minSpacingBetweenLabels {
             minLabel.position = newMinLabelCenter
             maxLabel.position = newMaxLabelCenter
+
+            if minLabel.frame.minX < 0.0 {
+                minLabel.frame.origin.x = 0.0
+            }
+
+            if maxLabel.frame.maxX > frame.width {
+                maxLabel.frame.origin.x = frame.width - maxLabel.frame.width
+            }
         } else {
             let increaseAmount: CGFloat = minSpacingBetweenLabels - newSpacingBetweenTextLabels
             minLabel.position = CGPoint(x: newMinLabelCenter.x - increaseAmount / 2.0, y: newMinLabelCenter.y)
@@ -544,9 +550,18 @@ import UIKit
 
             // Update x if they are still in the original position
             if minLabel.position.x == maxLabel.position.x {
-                minLabel.position = CGPoint(x: leftHandleCenter.x, y: minLabel.position.y)
-                maxLabel.position = CGPoint(x: leftHandleCenter.x + minLabel.frame.width / 2.0 + minSpacingBetweenLabels + maxLabel.frame.width / 2.0,
-                                            y: maxLabel.position.y)
+                minLabel.position.x = leftHandle.frame.midX
+                maxLabel.position.x = leftHandle.frame.midX + minLabel.frame.width / 2.0 + minSpacingBetweenLabels + maxLabel.frame.width / 2.0
+            }
+
+            if minLabel.frame.minX < 0.0 {
+                minLabel.frame.origin.x = 0.0
+                maxLabel.frame.origin.x = minSpacingBetweenLabels + minLabel.frame.width
+            }
+
+            if maxLabel.frame.maxX > frame.width {
+                maxLabel.frame.origin.x = frame.width - maxLabel.frame.width
+                minLabel.frame.origin.x = maxLabel.frame.origin.x - minSpacingBetweenLabels - minLabel.frame.width
             }
         }
     }
