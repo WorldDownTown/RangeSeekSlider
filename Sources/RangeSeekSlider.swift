@@ -67,12 +67,6 @@ import UIKit
         }
     }
 
-    /// String of the label when the handle is set to the minimum value.
-    @IBInspectable public var minValueString: String?
-
-    /// String of the label when the handle is set to the maximum value.
-    @IBInspectable public var maxValueString: String?
-
     /// The font of the minimum value text label. If not set, the default is system font size 12.0.
     public var minLabelFont: UIFont = UIFont.systemFont(ofSize: 12.0) {
         didSet {
@@ -525,14 +519,14 @@ import UIKit
             return
         }
 
-        if let minValueString = minValueString, selectedMinValue == minValue {
-            minLabel.string = minValueString
+        if let replacedString = delegate?.rangeSeekSlider(self, stringForMinValue: selectedMinValue) {
+            minLabel.string = replacedString
         } else {
             minLabel.string = numberFormatter.string(from: selectedMinValue as NSNumber)
         }
 
-        if let maxValueString = maxValueString, selectedMaxValue == maxValue {
-            maxLabel.string = maxValueString
+        if let replacedString = delegate?.rangeSeekSlider(self, stringForMaxValue: selectedMaxValue) {
+            maxLabel.string = replacedString
         } else {
             maxLabel.string = numberFormatter.string(from: selectedMaxValue as NSNumber)
         }

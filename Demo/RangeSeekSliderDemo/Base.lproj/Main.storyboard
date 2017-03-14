@@ -67,7 +67,6 @@
                                             <userDefinedRuntimeAttribute type="number" keyPath="maxDistance">
                                                 <real key="value" value="80"/>
                                             </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="minValueString" value="Free"/>
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Custom Range and Image Handle:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AzH-aT-IDj">
@@ -128,11 +127,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hidden Labels:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oXk-Mj-BG8">
-                                        <rect key="frame" x="16" y="484" width="207" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="207" id="Sna-ai-U0a"/>
-                                            <constraint firstAttribute="height" constant="21" id="fwf-Nv-DuZ"/>
-                                        </constraints>
+                                        <rect key="frame" x="16" y="484" width="114.5" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -158,8 +153,41 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Custom Label String:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qwj-Dy-ogm">
+                                        <rect key="frame" x="16" y="600" width="160.5" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gdz-ut-dL8" customClass="RangeSeekSlider" customModule="RangeSeekSlider">
+                                        <rect key="frame" x="16" y="631" width="343" height="65"/>
+                                        <color key="tintColor" red="0.94509803920000002" green="0.32156862749999998" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="65" id="wa9-1w-B3f"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="step">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="minDistance">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="selectedMaxValue">
+                                                <real key="value" value="67"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="selectedMinValue">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="minValue">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="maxValue">
+                                                <real key="value" value="67"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By WorldDownTown" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l8Q-0R-HSN">
-                                        <rect key="frame" x="230" y="600" width="128.5" height="17"/>
+                                        <rect key="frame" x="230" y="716" width="128.5" height="17"/>
                                         <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -180,11 +208,14 @@
                                     <constraint firstAttribute="trailing" secondItem="Ziu-u7-MMb" secondAttribute="trailing" constant="16" id="IhU-gZ-Ury"/>
                                     <constraint firstItem="AzH-aT-IDj" firstAttribute="top" secondItem="aHO-Yd-TsS" secondAttribute="bottom" constant="20" id="Jm6-vy-cvb"/>
                                     <constraint firstItem="C9a-jS-yyk" firstAttribute="top" secondItem="wcl-zp-wAu" secondAttribute="top" constant="20" id="OPi-3h-sYH"/>
+                                    <constraint firstItem="gdz-ut-dL8" firstAttribute="top" secondItem="qwj-Dy-ogm" secondAttribute="bottom" constant="10" id="Rxx-Zc-1gn"/>
+                                    <constraint firstItem="qwj-Dy-ogm" firstAttribute="leading" secondItem="wcl-zp-wAu" secondAttribute="leading" constant="16" id="S7C-ay-c6D"/>
                                     <constraint firstItem="9hi-ch-oTe" firstAttribute="top" secondItem="oXk-Mj-BG8" secondAttribute="bottom" constant="10" id="Tzv-ph-4vH"/>
                                     <constraint firstItem="4K8-GF-10z" firstAttribute="leading" secondItem="wcl-zp-wAu" secondAttribute="leading" constant="16" id="VIk-99-ySf"/>
+                                    <constraint firstItem="gdz-ut-dL8" firstAttribute="leading" secondItem="wcl-zp-wAu" secondAttribute="leading" constant="16" id="XEq-D5-ZxF"/>
                                     <constraint firstItem="oXk-Mj-BG8" firstAttribute="top" secondItem="Ziu-u7-MMb" secondAttribute="bottom" constant="20" id="XKs-WW-biu"/>
                                     <constraint firstItem="aHO-Yd-TsS" firstAttribute="leading" secondItem="wcl-zp-wAu" secondAttribute="leading" constant="16" id="Y1X-H5-hUN"/>
-                                    <constraint firstItem="l8Q-0R-HSN" firstAttribute="top" secondItem="9hi-ch-oTe" secondAttribute="bottom" constant="20" id="Yms-sl-V3V"/>
+                                    <constraint firstAttribute="trailing" secondItem="gdz-ut-dL8" secondAttribute="trailing" constant="16" id="c1d-VF-WkS"/>
                                     <constraint firstItem="hFS-hr-Hy5" firstAttribute="top" secondItem="AzH-aT-IDj" secondAttribute="bottom" constant="10" id="eES-ut-gGD"/>
                                     <constraint firstItem="evq-sI-chw" firstAttribute="width" secondItem="wcl-zp-wAu" secondAttribute="width" constant="-32" id="esr-Wi-gO8"/>
                                     <constraint firstItem="oXk-Mj-BG8" firstAttribute="leading" secondItem="wcl-zp-wAu" secondAttribute="leading" constant="16" id="jfD-EA-Chg"/>
@@ -195,6 +226,8 @@
                                     <constraint firstAttribute="bottom" secondItem="l8Q-0R-HSN" secondAttribute="bottom" constant="20" id="sK7-od-7oN"/>
                                     <constraint firstAttribute="trailing" secondItem="l8Q-0R-HSN" secondAttribute="trailing" constant="16" id="tDo-M2-uBo"/>
                                     <constraint firstItem="AzH-aT-IDj" firstAttribute="leading" secondItem="wcl-zp-wAu" secondAttribute="leading" constant="16" id="tFx-Hv-4vR"/>
+                                    <constraint firstItem="qwj-Dy-ogm" firstAttribute="top" secondItem="9hi-ch-oTe" secondAttribute="bottom" constant="20" id="y1k-To-61Y"/>
+                                    <constraint firstItem="l8Q-0R-HSN" firstAttribute="top" secondItem="gdz-ut-dL8" secondAttribute="bottom" constant="20" id="zlo-Vh-ix6"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -211,6 +244,7 @@
                         <outlet property="rangeSlider" destination="evq-sI-chw" id="k72-tE-yA5"/>
                         <outlet property="rangeSliderCurrency" destination="aHO-Yd-TsS" id="hMn-Ta-0mN"/>
                         <outlet property="rangeSliderCustom" destination="hFS-hr-Hy5" id="3wt-ag-AhN"/>
+                        <outlet property="rangeSliderCustomString" destination="gdz-ut-dL8" id="8C5-lV-cJC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YCF-VE-LZM" sceneMemberID="firstResponder"/>
