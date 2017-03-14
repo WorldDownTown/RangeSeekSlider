@@ -67,6 +67,12 @@ import UIKit
         }
     }
 
+    /// String of the label when the handle is set to the minimum value.
+    @IBInspectable public var minValueString: String?
+
+    /// String of the label when the handle is set to the maximum value.
+    @IBInspectable public var maxValueString: String?
+
     /// The font of the minimum value text label. If not set, the default is system font size 12.0.
     public var minLabelFont: UIFont = UIFont.systemFont(ofSize: 12.0) {
         didSet {
@@ -198,7 +204,7 @@ import UIKit
     /// Set the slider line height (default 1.0)
     @IBInspectable public var lineHeight: CGFloat = 1.0 {
         didSet {
-            setNeedsLayout()
+            updateLineHeight()
         }
     }
 
@@ -281,23 +287,12 @@ import UIKit
     open override func layoutSubviews() {
         super.layoutSubviews()
 
-        // positioning for the slider line
-        let barSidePadding: CGFloat = 16.0
-        let currentFrame: CGRect = frame
-        let yMiddle: CGFloat = currentFrame.height / 2.0
-        let lineLeftSide: CGPoint = CGPoint(x: barSidePadding, y: yMiddle)
-        let lineRightSide: CGPoint = CGPoint(x: (currentFrame.width - barSidePadding),
-                                             y: yMiddle)
-        sliderLine.frame = CGRect(x: lineLeftSide.x,
-                                  y: lineLeftSide.y,
-                                  width: lineRightSide.x - lineLeftSide.x,
-                                  height: lineHeight)
-
-        sliderLine.cornerRadius = lineHeight / 2.0
-
-        updateLabelValues()
-        updateHandlePositions()
-        updateLabelPositions()
+        if !leftHandleSelected && !rightHandleSelected {
+            updateLineHeight()
+            updateLabelValues()
+            updateHandlePositions()
+            updateLabelPositions()
+        }
     }
 
     open override var intrinsicContentSize: CGSize {
@@ -510,6 +505,19 @@ import UIKit
         return sliderLine.frame.minX + offset
     }
 
+    private func updateLineHeight() {
+        let barSidePadding: CGFloat = 16.0
+        let yMiddle: CGFloat = frame.height / 2.0
+        let lineLeftSide: CGPoint = CGPoint(x: barSidePadding, y: yMiddle)
+        let lineRightSide: CGPoint = CGPoint(x: frame.width - barSidePadding,
+                                             y: yMiddle)
+        sliderLine.frame = CGRect(x: lineLeftSide.x,
+                                  y: lineLeftSide.y,
+                                  width: lineRightSide.x - lineLeftSide.x,
+                                  height: lineHeight)
+        sliderLine.cornerRadius = lineHeight / 2.0
+    }
+
     private func updateLabelValues() {
         if hideLabels {
             minLabel.string = nil
@@ -517,8 +525,17 @@ import UIKit
             return
         }
 
-        minLabel.string = numberFormatter.string(from: selectedMinValue as NSNumber)
-        maxLabel.string = numberFormatter.string(from: selectedMaxValue as NSNumber)
+        if let minValueString = minValueString, selectedMinValue == minValue {
+            minLabel.string = minValueString
+        } else {
+            minLabel.string = numberFormatter.string(from: selectedMinValue as NSNumber)
+        }
+
+        if let maxValueString = maxValueString, selectedMaxValue == maxValue {
+            maxLabel.string = maxValueString
+        } else {
+            maxLabel.string = numberFormatter.string(from: selectedMaxValue as NSNumber)
+        }
 
         if let nsstring = minLabel.string as? NSString {
             minLabelTextSize = nsstring.size(attributes: [NSFontAttributeName: minLabelFont])
