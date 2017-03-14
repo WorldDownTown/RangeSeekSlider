@@ -91,6 +91,9 @@ The colorBetweenHandles property sets the color of the line between the two hand
 #### `handleBorderColor`
 If set it will update the color of the handle borders. Default is `tintColor`.
 
+### `initialColor`
+The color of the entire slider when the handle is set to the minimum value and the maximum value. Default is nil.
+
 #### `disableRange`
 If true, the control will mimic a normal slider and have only one handle rather than a range.
 

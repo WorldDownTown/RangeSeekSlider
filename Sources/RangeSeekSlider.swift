@@ -34,22 +34,14 @@ import UIKit
     public weak var delegate: RangeSeekSliderDelegate?
 
     /// The minimum possible value to select in the range
-    @IBInspectable public var minValue: CGFloat = 0.0 {
-        didSet {
-            refresh()
-        }
-    }
+    @IBInspectable public var minValue: CGFloat = 0.0
 
     /// The maximum possible value to select in the range
-    @IBInspectable public var maxValue: CGFloat = 100.0 {
-        didSet {
-            refresh()
-        }
-    }
+    @IBInspectable public var maxValue: CGFloat = 100.0
 
     /// The preselected minumum value
     /// (note: This should be less than the selectedMaxValue)
-    @IBInspectable public var selectedMinValue: CGFloat = 10.0 {
+    @IBInspectable public var selectedMinValue: CGFloat = 0.0 {
         didSet {
             if selectedMinValue < minValue {
                 selectedMinValue = minValue
@@ -59,7 +51,7 @@ import UIKit
 
     /// The preselected maximum value
     /// (note: This should be greater than the selectedMinValue)
-    @IBInspectable public var selectedMaxValue: CGFloat = 90.0 {
+    @IBInspectable public var selectedMaxValue: CGFloat = 100.0 {
         didSet {
             if selectedMaxValue > maxValue {
                 selectedMaxValue = maxValue
@@ -96,7 +88,6 @@ import UIKit
     @IBInspectable public var hideLabels: Bool = false
 
     /// The minimum distance the two selected slider values must be apart. Default is 0.
-
     @IBInspectable public var minDistance: CGFloat = 0.0 {
         didSet {
             if minDistance < 0.0 {
@@ -106,7 +97,6 @@ import UIKit
     }
 
     /// The maximum distance the two selected slider values must be apart. Default is CGFloat.greatestFiniteMagnitude.
-
     @IBInspectable public var maxDistance: CGFloat = .greatestFiniteMagnitude {
         didSet {
             if maxDistance < 0.0 {
@@ -116,41 +106,22 @@ import UIKit
     }
 
     /// The color of the minimum value text label. If not set, the default is the tintColor.
-    @IBInspectable public var minLabelColor: UIColor? {
-        didSet {
-            minLabel.foregroundColor = minLabelColor?.cgColor
-        }
-    }
+    @IBInspectable public var minLabelColor: UIColor?
 
     /// The color of the maximum value text label. If not set, the default is the tintColor.
-    @IBInspectable public var maxLabelColor: UIColor? {
-        didSet {
-            maxLabel.foregroundColor = maxLabelColor?.cgColor
-        }
-    }
+    @IBInspectable public var maxLabelColor: UIColor?
 
     /// Handle slider with custom color, you can set custom color for your handle
-    @IBInspectable public var handleColor: UIColor? {
-        didSet {
-            leftHandle.backgroundColor = handleColor?.cgColor
-            rightHandle.backgroundColor = handleColor?.cgColor
-        }
-    }
+    @IBInspectable public var handleColor: UIColor?
 
     /// Handle slider with custom border color, you can set custom border color for your handle
-    @IBInspectable public var handleBorderColor: UIColor? {
-        didSet {
-            leftHandle.borderColor = handleBorderColor?.cgColor
-            rightHandle.borderColor = handleBorderColor?.cgColor
-        }
-    }
+    @IBInspectable public var handleBorderColor: UIColor?
 
     /// Set slider line tint color between handles
-    @IBInspectable public var colorBetweenHandles: UIColor? {
-        didSet {
-            sliderLineBetweenHandles.backgroundColor = colorBetweenHandles?.cgColor
-        }
-    }
+    @IBInspectable public var colorBetweenHandles: UIColor?
+
+    /// The color of the entire slider when the handle is set to the minimum value and the maximum value. Default is nil.
+    @IBInspectable public var initialColor: UIColor?
 
     /// If true, the control will mimic a normal slider and have only one handle rather than a range.
     /// In this case, the selectedMinValue will be not functional anymore. Use selectedMaxValue instead to determine the value the user has selected.
@@ -171,14 +142,12 @@ import UIKit
     /// Handle slider with custom image, you can set custom image for your handle
     @IBInspectable public var handleImage: UIImage? {
         didSet {
-            let startFrame: CGRect = CGRect(x: 0.0, y: 0.0, width: 32.0, height: 32.0)
-            leftHandle.frame = startFrame
+            let handleFrame: CGRect = CGRect(x: 0.0, y: 0.0, width: 32.0, height: 32.0)
+            leftHandle.frame = handleFrame
             leftHandle.contents = handleImage?.cgImage
-            leftHandle.backgroundColor = UIColor.clear.cgColor
 
-            rightHandle.frame = startFrame
+            rightHandle.frame = handleFrame
             rightHandle.contents = handleImage?.cgImage
-            rightHandle.backgroundColor = UIColor.clear.cgColor
         }
     }
 
@@ -285,6 +254,7 @@ import UIKit
         if handleTracking == .none {
             updateLineHeight()
             updateLabelValues()
+            updateColors()
             updateHandlePositions()
             updateLabelPositions()
         }
@@ -292,37 +262,6 @@ import UIKit
 
     open override var intrinsicContentSize: CGSize {
         return CGSize(width: UIViewNoIntrinsicMetric, height: 65.0)
-    }
-
-    open override var tintColor: UIColor! {
-        didSet {
-            guard let color: CGColor = tintColor?.cgColor else { return }
-
-            CATransaction.begin()
-            CATransaction.setAnimationDuration(0.5)
-            CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut))
-
-            sliderLine.backgroundColor = color
-
-            if handleColor == nil {
-                leftHandle.backgroundColor = color
-                rightHandle.backgroundColor = color
-            }
-
-            if minLabelColor == nil {
-                minLabel.foregroundColor = color
-            }
-
-            if maxLabelColor == nil {
-                maxLabel.foregroundColor = color
-            }
-
-            if colorBetweenHandles == nil {
-                sliderLineBetweenHandles.backgroundColor = color
-            }
-
-            CATransaction.commit()
-        }
     }
 
 
@@ -419,25 +358,19 @@ import UIKit
         accessibleElements = [leftHandleAccessibilityElement, rightHandleAccessibilityElement]
 
         // draw the slider line
-        sliderLine.backgroundColor = tintColor.cgColor
         layer.addSublayer(sliderLine)
 
         // draw the track distline
-        sliderLineBetweenHandles.backgroundColor = tintColor.cgColor
         layer.addSublayer(sliderLineBetweenHandles)
 
         // draw the minimum slider handle
         leftHandle.cornerRadius = handleDiameter / 2.0
-        leftHandle.backgroundColor = tintColor.cgColor
         leftHandle.borderWidth = handleBorderWidth
-        leftHandle.borderColor = handleBorderColor?.cgColor
         layer.addSublayer(leftHandle)
 
         // draw the maximum slider handle
         rightHandle.cornerRadius = handleDiameter / 2.0
-        rightHandle.backgroundColor = tintColor.cgColor
         rightHandle.borderWidth = handleBorderWidth
-        rightHandle.borderColor = handleBorderColor?.cgColor
         layer.addSublayer(rightHandle)
 
         let handleFrame: CGRect = CGRect(x: 0.0, y: 0.0, width: handleDiameter, height: handleDiameter)
@@ -452,22 +385,12 @@ import UIKit
         minLabel.alignmentMode = kCAAlignmentCenter
         minLabel.frame = labelFrame
         minLabel.contentsScale = UIScreen.main.scale
-        if let cgColor = minLabelColor?.cgColor {
-            minLabel.foregroundColor = cgColor
-        } else {
-            minLabel.foregroundColor = tintColor.cgColor
-        }
         layer.addSublayer(minLabel)
 
         maxLabelFont = UIFont.systemFont(ofSize: labelFontSize)
         maxLabel.alignmentMode = kCAAlignmentCenter
         maxLabel.frame = labelFrame
         maxLabel.contentsScale = UIScreen.main.scale
-        if let cgColor = maxLabelColor?.cgColor {
-            maxLabel.foregroundColor = cgColor
-        } else {
-            maxLabel.foregroundColor = tintColor.cgColor
-        }
         layer.addSublayer(maxLabel)
 
         refresh()
@@ -538,6 +461,39 @@ import UIKit
 
         if let nsstring = maxLabel.string as? NSString {
             maxLabelTextSize = nsstring.size(attributes: [NSFontAttributeName: maxLabelFont])
+        }
+    }
+
+    private func updateColors() {
+        let isInitial: Bool = selectedMinValue == minValue && selectedMaxValue == maxValue
+        if let initialColor = initialColor?.cgColor, isInitial {
+            minLabel.foregroundColor = initialColor
+            maxLabel.foregroundColor = initialColor
+            sliderLineBetweenHandles.backgroundColor = initialColor
+            sliderLine.backgroundColor = initialColor
+
+            let color: CGColor = (handleImage == nil) ? initialColor : UIColor.clear.cgColor
+            leftHandle.backgroundColor = color
+            leftHandle.borderColor = color
+            rightHandle.backgroundColor = color
+            rightHandle.borderColor = color
+        } else {
+            let tintCGColor: CGColor = tintColor.cgColor
+            minLabel.foregroundColor = minLabelColor?.cgColor ?? tintCGColor
+            maxLabel.foregroundColor = maxLabelColor?.cgColor ?? tintCGColor
+            sliderLineBetweenHandles.backgroundColor = colorBetweenHandles?.cgColor ?? tintCGColor
+            sliderLine.backgroundColor = tintCGColor
+
+            let color: CGColor
+            if let _ = handleImage {
+                color = UIColor.clear.cgColor
+            } else {
+                color = handleColor?.cgColor ?? tintCGColor
+            }
+            leftHandle.backgroundColor = color
+            leftHandle.borderColor = color
+            rightHandle.backgroundColor = color
+            rightHandle.borderColor = color
         }
     }
 
@@ -639,6 +595,7 @@ import UIKit
         CATransaction.commit()
 
         updateLabelValues()
+        updateColors()
         updateAccessibilityElements()
 
         // update the delegate
