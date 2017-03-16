@@ -16,7 +16,7 @@ This library is based on [TomThorpe/TTRangeSlider](https://github.com/TomThorpe/
 ![demo](images/demo.gif)
 
 ## Demo
-You can try on [Appetize.io](https://appetize.io/app/pna3vjqbzjvt0t9c8cgxykg380)
+You can try on [Appetize.io](https://appetize.io/app/v3pzcncpffgth3qqe1v8a1ktg4)
 
 or
 
@@ -139,6 +139,9 @@ The brief description displayed in accessibility mode for minimum value handler.
 #### `maxLabelAccessibilityHint`
 The brief description displayed in accessibility mode for maximum value handler. If not set, the default is empty String.
 
+#### `func setupStyle()`
+When subclassing `RangeSeekSlider` and setting each item in `setupStyle()`, the design is reflected in Interface Builder as well.
+
 ## Requirements
 - Swift 3.0+
 - iOS 9.0+
@@ -156,7 +159,7 @@ github "WorldDownTown/RangeSeekSlider"
 When installed with Carthage, `@IBDesignable` can't be available ([Carthage Issue](https://github.com/Carthage/Carthage/issues/335)). But we have a workaround is shown in [Stack Overflow](http://stackoverflow.com/a/37631860/1835227). It is able to use `@IBDesignable` by subclassing `RangeSeekSlider`.
 
 ```swift
-@IBDesignable class ChildRangeSeekSlider: RangeSeedSlider {}
+@IBDesignable class CustomRangeSeekSlider: RangeSeedSlider {}
 ```
 
 

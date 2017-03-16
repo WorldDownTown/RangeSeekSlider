@@ -24,12 +24,13 @@ import UIKit
         setup()
     }
 
-    public convenience init() {
-        self.init(frame: .zero)
+    public convenience init(frame: CGRect = .zero, completion: ((RangeSeekSlider) -> Void)? = nil) {
+        self.init(frame: frame)
+        completion?(self)
     }
 
 
-    // MARK: - public stored properties
+    // MARK: - open stored properties
 
     open weak var delegate: RangeSeekSliderDelegate?
 
@@ -367,6 +368,12 @@ import UIKit
     }
 
 
+    // MARK: - open methods
+
+    /// When subclassing **RangeSeekSlider** and setting each item in **setupStyle()**, the design is reflected in Interface Builder as well.
+    open func setupStyle() {}
+
+
     // MARK: - private methods
 
     private func setup() {
@@ -408,6 +415,8 @@ import UIKit
         maxLabel.frame = labelFrame
         maxLabel.contentsScale = UIScreen.main.scale
         layer.addSublayer(maxLabel)
+
+        setupStyle()
 
         refresh()
     }

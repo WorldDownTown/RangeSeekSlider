@@ -162,48 +162,12 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gdz-ut-dL8" customClass="RangeSeekSlider" customModule="RangeSeekSlider">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gdz-ut-dL8" customClass="CustomRangeSeekSlider" customModule="RangeSeekSlider">
                                         <rect key="frame" x="16" y="631" width="343" height="65"/>
                                         <color key="tintColor" red="0.80392158030000005" green="0.80392158030000005" blue="0.80392158030000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="65" id="wa9-1w-B3f"/>
                                         </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="step">
-                                                <real key="value" value="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="minDistance">
-                                                <real key="value" value="1"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="labelsFixed" value="YES"/>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="initialColor">
-                                                <color key="value" red="0.80392158030000005" green="0.80392158030000005" blue="0.80392158030000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="colorBetweenHandles">
-                                                <color key="value" red="0.94509803920000002" green="0.32156862749999998" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="handleColor">
-                                                <color key="value" red="0.94509803920000002" green="0.32156862749999998" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="minLabelColor">
-                                                <color key="value" red="0.94509803920000002" green="0.32156862749999998" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="maxLabelColor">
-                                                <color key="value" red="0.94509803920000002" green="0.32156862749999998" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="minValue">
-                                                <real key="value" value="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="maxValue">
-                                                <real key="value" value="67"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="selectedMinValue">
-                                                <real key="value" value="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="selectedMaxValue">
-                                                <real key="value" value="67"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By WorldDownTown" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l8Q-0R-HSN">
                                         <rect key="frame" x="230" y="716" width="128.5" height="17"/>
@@ -265,7 +229,6 @@
                         <outlet property="rangeSlider" destination="evq-sI-chw" id="k72-tE-yA5"/>
                         <outlet property="rangeSliderCurrency" destination="aHO-Yd-TsS" id="hMn-Ta-0mN"/>
                         <outlet property="rangeSliderCustom" destination="hFS-hr-Hy5" id="3wt-ag-AhN"/>
-                        <outlet property="rangeSliderCustomString" destination="gdz-ut-dL8" id="8C5-lV-cJC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YCF-VE-LZM" sceneMemberID="firstResponder"/>
