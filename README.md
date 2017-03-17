@@ -28,7 +28,9 @@ Build Xcode project.
 
 ## Usage
 Add the RangeSeekSlider like you would with any other UIControl. Either:
-- Add a view in your storyboard/class and change it’s type to `RangeSeekSlider`. You can set all the properties in the Attributes Inspector and see a live preview:
+- Add a view in your storyboard/xib and change its `Class` and `Module` to `RangeSeekSlider`.  You can set all the properties in the Attributes Inspector and see a live preview:
+
+![Interface Builder Module Screenshot](images/interface_builder_module.png)
 
 ![Interface Builder Screenshot](images/interface_builder.png)
 
