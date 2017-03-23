@@ -143,6 +143,7 @@ The brief description displayed in accessibility mode for maximum value handler.
 
 #### `func setupStyle()`
 When subclassing `RangeSeekSlider` and setting each item in `setupStyle()`, the design is reflected in Interface Builder as well.
+![setup_style.gif](images/setup_style.gif)
 
 ## Requirements
 - Swift 3.0+
