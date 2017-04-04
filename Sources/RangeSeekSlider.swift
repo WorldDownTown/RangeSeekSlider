@@ -513,9 +513,9 @@ import UIKit
                 color = handleColor?.cgColor ?? tintCGColor
             }
             leftHandle.backgroundColor = color
-            leftHandle.borderColor = color
+            leftHandle.borderColor = handleBorderColor.map { $0.cgColor }
             rightHandle.backgroundColor = color
-            rightHandle.borderColor = color
+            rightHandle.borderColor = handleBorderColor.map { $0.cgColor }
         }
     }
 
