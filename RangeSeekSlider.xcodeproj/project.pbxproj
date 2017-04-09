@@ -13,6 +13,7 @@
 		CE3D49AF1E7121990071E992 /* RangeSeekSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* RangeSeekSlider.framework */; };
 		CE3D49B01E7121990071E992 /* RangeSeekSlider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* RangeSeekSlider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CE3D49B61E712B840071E992 /* RangeSeekSliderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D49B51E712B840071E992 /* RangeSeekSliderDelegate.swift */; };
+		CEBD453C1E9A42E4001AF6DF /* TapticEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBD453B1E9A42E4001AF6DF /* TapticEngine.swift */; };
 		CED789241E75A57B00900B25 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED789231E75A57B00900B25 /* CoreGraphics.framework */; };
 		CED789261E75A58100900B25 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED789251E75A58100900B25 /* UIKit.framework */; };
 		CEF0136C1E72674F00DCF3D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEF273E41E7023F7003AA995 /* Assets.xcassets */; };
@@ -61,6 +62,7 @@
 		CE3D49B51E712B840071E992 /* RangeSeekSliderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSeekSliderDelegate.swift; sourceTree = "<group>"; };
 		CE3D49B81E71409A0071E992 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CE9937551E70236800EA982A /* RangeSeekSliderDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RangeSeekSliderDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEBD453B1E9A42E4001AF6DF /* TapticEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapticEngine.swift; sourceTree = "<group>"; };
 		CED789231E75A57B00900B25 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		CED789251E75A58100900B25 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CEF273E21E7023ED003AA995 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Demo/RangeSeekSliderDemo/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
@@ -188,6 +190,7 @@
 			children = (
 				OBJ_9 /* RangeSeekSlider.swift */,
 				CE3D49B51E712B840071E992 /* RangeSeekSliderDelegate.swift */,
+				CEBD453B1E9A42E4001AF6DF /* TapticEngine.swift */,
 			);
 			name = RangeSeekSlider;
 			path = Sources;
@@ -332,6 +335,7 @@
 			buildActionMask = 0;
 			files = (
 				OBJ_21 /* RangeSeekSlider.swift in Sources */,
+				CEBD453C1E9A42E4001AF6DF /* TapticEngine.swift in Sources */,
 				CE3D49B61E712B840071E992 /* RangeSeekSliderDelegate.swift in Sources */,
 				CE00D96E1E7AA99A0032CA93 /* CustomRangeSeekSlider.swift in Sources */,
 			);
