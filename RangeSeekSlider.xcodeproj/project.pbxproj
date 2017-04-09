@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE00D96E1E7AA99A0032CA93 /* CustomRangeSeekSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE00D96D1E7AA99A0032CA93 /* CustomRangeSeekSlider.swift */; };
 		CE1967FE1E7668A300DBAE72 /* RangeSeekSlider.swift in Headers */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* RangeSeekSlider.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE2FEE5A1E7A639C00D396B5 /* RangeSeekSliderDelegate.swift in Headers */ = {isa = PBXBuildFile; fileRef = CE3D49B51E712B840071E992 /* RangeSeekSliderDelegate.swift */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE3D49AF1E7121990071E992 /* RangeSeekSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* RangeSeekSlider.framework */; };
 		CE3D49B01E7121990071E992 /* RangeSeekSlider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* RangeSeekSlider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CE3D49B61E712B840071E992 /* RangeSeekSliderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D49B51E712B840071E992 /* RangeSeekSliderDelegate.swift */; };
@@ -56,6 +58,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CE00D96D1E7AA99A0032CA93 /* CustomRangeSeekSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomRangeSeekSlider.swift; path = Demo/RangeSeekSliderDemo/CustomRangeSeekSlider.swift; sourceTree = SOURCE_ROOT; };
 		CE3D49B51E712B840071E992 /* RangeSeekSliderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSeekSliderDelegate.swift; sourceTree = "<group>"; };
 		CE3D49B81E71409A0071E992 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CE9937551E70236800EA982A /* RangeSeekSliderDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RangeSeekSliderDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,6 +125,7 @@
 				CEF273E81E702405003AA995 /* LaunchScreen.storyboard */,
 				CEF273EA1E702405003AA995 /* Main.storyboard */,
 				CEF273E61E7023F7003AA995 /* ViewController.swift */,
+				CE00D96D1E7AA99A0032CA93 /* CustomRangeSeekSlider.swift */,
 			);
 			name = RangeSeekSliderDemo;
 			sourceTree = "<group>";
@@ -200,6 +204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE1967FE1E7668A300DBAE72 /* RangeSeekSlider.swift in Headers */,
+				CE2FEE5A1E7A639C00D396B5 /* RangeSeekSliderDelegate.swift in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,6 +337,7 @@
 				OBJ_21 /* RangeSeekSlider.swift in Sources */,
 				CEBD453C1E9A42E4001AF6DF /* TapticEngine.swift in Sources */,
 				CE3D49B61E712B840071E992 /* RangeSeekSliderDelegate.swift in Sources */,
+				CE00D96E1E7AA99A0032CA93 /* CustomRangeSeekSlider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
