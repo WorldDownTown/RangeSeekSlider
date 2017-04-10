@@ -233,6 +233,10 @@ import UIKit
     private var minLabelTextSize: CGSize = .zero
     private var maxLabelTextSize: CGSize = .zero
 
+    // UIFeedbackGenerator
+    private var previousStepMinValue: CGFloat?
+    private var previousStepMaxValue: CGFloat?
+
     // strong reference needed for UIAccessibilityContainer
     // see http://stackoverflow.com/questions/13462046/custom-uiview-not-showing-accessibility-on-voice-over
     private var accessibleElements: [UIAccessibilityElement] = []
@@ -513,9 +517,9 @@ import UIKit
                 color = handleColor?.cgColor ?? tintCGColor
             }
             leftHandle.backgroundColor = color
-            leftHandle.borderColor = color
+            leftHandle.borderColor = handleBorderColor.map { $0.cgColor }
             rightHandle.backgroundColor = color
-            rightHandle.borderColor = color
+            rightHandle.borderColor = handleBorderColor.map { $0.cgColor }
         }
     }
 
@@ -611,7 +615,16 @@ import UIKit
     fileprivate func refresh() {
         if enableStep && step > 0.0 {
             selectedMinValue = CGFloat(roundf(Float(selectedMinValue / step))) * step
+            if let previousStepMinValue = previousStepMinValue, previousStepMinValue != selectedMinValue {
+                TapticEngine.selection.feedback()
+            }
+            previousStepMinValue = selectedMinValue
+
             selectedMaxValue = CGFloat(roundf(Float(selectedMaxValue / step))) * step
+            if let previousStepMaxValue = previousStepMaxValue, previousStepMaxValue != selectedMaxValue {
+                TapticEngine.selection.feedback()
+            }
+            previousStepMaxValue = selectedMaxValue
         }
 
         let diff: CGFloat = selectedMaxValue - selectedMinValue
