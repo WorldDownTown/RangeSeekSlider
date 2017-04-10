@@ -616,13 +616,13 @@ import UIKit
         if enableStep && step > 0.0 {
             selectedMinValue = CGFloat(roundf(Float(selectedMinValue / step))) * step
             if let previousStepMinValue = previousStepMinValue, previousStepMinValue != selectedMinValue {
-                TapticEngine.feedback()
+                TapticEngine.selection.feedback()
             }
             previousStepMinValue = selectedMinValue
 
             selectedMaxValue = CGFloat(roundf(Float(selectedMaxValue / step))) * step
             if let previousStepMaxValue = previousStepMaxValue, previousStepMaxValue != selectedMaxValue {
-                TapticEngine.feedback()
+                TapticEngine.selection.feedback()
             }
             previousStepMaxValue = selectedMaxValue
         }
