@@ -463,10 +463,11 @@ import UIKit
                                   width: lineRightSide.x - lineLeftSide.x,
                                   height: lineHeight)
         sliderLine.cornerRadius = lineHeight / 2.0
+        sliderLineBetweenHandles.cornerRadius = sliderLine.cornerRadius
     }
 
     private func updateLabelValues() {
-        minLabel.isHidden = hideLabels
+        minLabel.isHidden = hideLabels || disableRange
         maxLabel.isHidden = hideLabels
 
         if let replacedString = delegate?.rangeSeekSlider(self, stringForMinValue: selectedMinValue) {
