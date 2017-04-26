@@ -1,9 +1,9 @@
 Pod::Spec.new do |s|
   s.name                  = 'RangeSeekSlider'
   s.version               = '1.6.1'
-  s.summary               = 'RangeSeedSlider provides a customizable range slider like a UISlider.'
+  s.summary               = 'RangeSeekSlider provides a customizable range slider like a UISlider.'
   s.description           = <<-DESC
-                            RangeSeedSlider provides a customizable range slider like a UISlider.
+                            RangeSeekSlider provides a customizable range slider like a UISlider.
                             This library based on [TomThorpe/RangeSeekSlider](https://github.com/TomThorpe/RangeSeekSlider) (Objective-C) and made with Swift.
                             DESC
   s.homepage              = 'https://github.com/WorldDownTown/RangeSeekSlider'
