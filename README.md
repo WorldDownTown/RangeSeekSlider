@@ -10,7 +10,7 @@
 [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/matteocrippa/awesome-swift#ui)
 
 ## Overview
-`RangeSeedSlider` provides a customizable range slider like a UISlider.
+`RangeSeekSlider` provides a customizable range slider like a UISlider.
 This library is based on [TomThorpe/TTRangeSlider](https://github.com/TomThorpe/TTRangeSlider) (Objective-C) and made with Swift.
 
 ![demo](images/demo.gif)
@@ -162,7 +162,7 @@ github "WorldDownTown/RangeSeekSlider"
 When installed with Carthage, `@IBDesignable` can't be available ([Carthage Issue](https://github.com/Carthage/Carthage/issues/335)). But we have a workaround is shown in [Stack Overflow](http://stackoverflow.com/a/37631860/1835227). It is able to use `@IBDesignable` by subclassing `RangeSeekSlider`.
 
 ```swift
-@IBDesignable class CustomRangeSeekSlider: RangeSeedSlider {}
+@IBDesignable class CustomRangeSeekSlider: RangeSeekSlider {}
 ```
 
 
