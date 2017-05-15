@@ -159,12 +159,18 @@ import UIKit
     /// Handle slider with custom image, you can set custom image for your handle
     @IBInspectable open var handleImage: UIImage? {
         didSet {
-            let handleFrame: CGRect = CGRect(x: 0.0, y: 0.0, width: 32.0, height: 32.0)
+            guard let image = handleImage else {
+                return
+            }
+            
+            var handleFrame = CGRect.zero
+            handleFrame.size = image.size
+            
             leftHandle.frame = handleFrame
-            leftHandle.contents = handleImage?.cgImage
+            leftHandle.contents = image.cgImage
 
             rightHandle.frame = handleFrame
-            rightHandle.contents = handleImage?.cgImage
+            rightHandle.contents = image.cgImage
         }
     }
 
