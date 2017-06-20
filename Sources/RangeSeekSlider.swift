@@ -86,7 +86,7 @@ import UIKit
 
     /// Each handle in the slider has a label above it showing the current selected value. By default, this is displayed as a decimal format.
     /// You can update this default here by updating properties of NumberFormatter. For example, you could supply a currency style, or a prefix or suffix.
-    open let numberFormatter: NumberFormatter = {
+    open var numberFormatter: NumberFormatter = {
         let formatter: NumberFormatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 0
