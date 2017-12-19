@@ -621,13 +621,13 @@ import UIKit
 
     fileprivate func refresh() {
         if enableStep && step > 0.0 {
-            selectedMinValue = CGFloat(roundf(Float(selectedMinValue / step))) * step
+            selectedMinValue = CGFloat(roundf(Float((selectedMinValue - minValue) / step))) * step + minValue
             if let previousStepMinValue = previousStepMinValue, previousStepMinValue != selectedMinValue {
                 TapticEngine.selection.feedback()
             }
             previousStepMinValue = selectedMinValue
 
-            selectedMaxValue = CGFloat(roundf(Float(selectedMaxValue / step))) * step
+            selectedMaxValue = CGFloat(roundf(Float((selectedMaxValue - minValue) / step))) * step + minValue
             if let previousStepMaxValue = previousStepMaxValue, previousStepMaxValue != selectedMaxValue {
                 TapticEngine.selection.feedback()
             }
