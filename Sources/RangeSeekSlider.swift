@@ -55,6 +55,7 @@ import UIKit
             if selectedMinValue < minValue {
                 selectedMinValue = minValue
             }
+            refresh()
         }
     }
 
@@ -65,6 +66,7 @@ import UIKit
             if selectedMaxValue > maxValue {
                 selectedMaxValue = maxValue
             }
+            refresh()
         }
     }
 
@@ -221,13 +223,13 @@ import UIKit
     /// The brief description displayed in accessibility mode for maximum value handler. If not set, the default is empty String.
     @IBInspectable open var maxLabelAccessibilityHint: String?
 
-
+    open let sliderLine: CALayer = CALayer()
+    
     // MARK: - private stored properties
 
     private enum HandleTracking { case none, left, right }
     private var handleTracking: HandleTracking = .none
 
-    private let sliderLine: CALayer = CALayer()
     private let sliderLineBetweenHandles: CALayer = CALayer()
 
     private let leftHandle: CALayer = CALayer()

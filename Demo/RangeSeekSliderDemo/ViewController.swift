@@ -54,6 +54,8 @@ final class ViewController: UIViewController {
         rangeSliderCustom.lineHeight = 10.0
         rangeSliderCustom.numberFormatter.positivePrefix = "$"
         rangeSliderCustom.numberFormatter.positiveSuffix = "M"
+        rangeSliderCustom.sliderLine.borderColor = UIColor.green.cgColor
+        rangeSliderCustom.sliderLine.borderWidth = 1.0
     }
 }
 
