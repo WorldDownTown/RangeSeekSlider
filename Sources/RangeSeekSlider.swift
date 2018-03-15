@@ -41,6 +41,7 @@ import UIKit
         }
     }
 
+
     /// The maximum possible value to select in the range
     @IBInspectable open var maxValue: CGFloat = 100.0 {
         didSet {
@@ -54,6 +55,16 @@ import UIKit
         didSet {
             if selectedMinValue < minValue {
                 selectedMinValue = minValue
+            }
+        }
+    }
+    
+    /// The preselected minumum value
+    /// (note: This should be less than the selectedMaxValue)
+    @IBInspectable open var selectedIdealValue: CGFloat = 50.0 {
+        didSet {
+            if selectedIdealValue < minValue {
+                selectedIdealValue = minValue
             }
         }
     }
@@ -73,6 +84,14 @@ import UIKit
         didSet {
             minLabel.font = minLabelFont as CFTypeRef
             minLabel.fontSize = minLabelFont.pointSize
+        }
+    }
+    
+    /// The font of the minimum value text label. If not set, the default is system font size 12.0.
+    open var idealLabelFont: UIFont = UIFont.systemFont(ofSize: 12.0) {
+        didSet {
+            idealLabel.font = idealLabelFont as CFTypeRef
+            idealLabel.fontSize = idealLabelFont.pointSize
         }
     }
 
@@ -112,6 +131,15 @@ import UIKit
             }
         }
     }
+    
+    /// The minimum distance the two selected slider values must be apart. Default is 0.
+    @IBInspectable open var idealDistance: CGFloat = 0.0 {
+        didSet {
+            if idealDistance < 0.0 {
+                idealDistance = 0.0
+            }
+        }
+    }
 
     /// The maximum distance the two selected slider values must be apart. Default is CGFloat.greatestFiniteMagnitude.
     @IBInspectable open var maxDistance: CGFloat = .greatestFiniteMagnitude {
@@ -124,6 +152,9 @@ import UIKit
 
     /// The color of the minimum value text label. If not set, the default is the tintColor.
     @IBInspectable open var minLabelColor: UIColor?
+    
+    /// The color of the minimum value text label. If not set, the default is the tintColor.
+    @IBInspectable open var idealLabelColor: UIColor?
 
     /// The color of the maximum value text label. If not set, the default is the tintColor.
     @IBInspectable open var maxLabelColor: UIColor?
@@ -148,6 +179,15 @@ import UIKit
             minLabel.isHidden = disableRange
         }
     }
+    
+    /// If true, the control will mimic a normal slider and have only one handle rather than a range.
+    /// In this case, the selectedMinValue will be not functional anymore. Use selectedMaxValue instead to determine the value the user has selected.
+    @IBInspectable open var disableIdeal: Bool = false {
+        didSet {
+            idealHandle.isHidden = disableIdeal
+            idealLabel.isHidden = disableIdeal
+        }
+    }
 
     /// If true the control will snap to point at each step between minValue and maxValue. Default is false.
     @IBInspectable open var enableStep: Bool = false
@@ -168,6 +208,9 @@ import UIKit
             
             leftHandle.frame = handleFrame
             leftHandle.contents = image.cgImage
+            
+            idealHandle.frame = handleFrame
+            idealHandle.contents = image.cgImage
 
             rightHandle.frame = handleFrame
             rightHandle.contents = image.cgImage
@@ -178,8 +221,10 @@ import UIKit
     @IBInspectable open var handleDiameter: CGFloat = 16.0 {
         didSet {
             leftHandle.cornerRadius = handleDiameter / 2.0
+            idealHandle.cornerRadius = handleDiameter / 2.0
             rightHandle.cornerRadius = handleDiameter / 2.0
             leftHandle.frame = CGRect(x: 0.0, y: 0.0, width: handleDiameter, height: handleDiameter)
+            idealHandle.frame = CGRect(x: 0.0, y: 0.0, width: handleDiameter, height: handleDiameter)
             rightHandle.frame = CGRect(x: 0.0, y: 0.0, width: handleDiameter, height: handleDiameter)
         }
     }
@@ -198,6 +243,7 @@ import UIKit
     @IBInspectable open var handleBorderWidth: CGFloat = 0.0 {
         didSet {
             leftHandle.borderWidth = handleBorderWidth
+            idealHandle.borderWidth = handleBorderWidth
             rightHandle.borderWidth = handleBorderWidth
         }
     }
@@ -211,12 +257,18 @@ import UIKit
 
     /// The label displayed in accessibility mode for minimum value handler. If not set, the default is empty String.
     @IBInspectable open var minLabelAccessibilityLabel: String?
+    
+    /// The label displayed in accessibility mode for minimum value handler. If not set, the default is empty String.
+    @IBInspectable open var idealLabelAccessibilityLabel: String?
 
     /// The label displayed in accessibility mode for maximum value handler. If not set, the default is empty String.
     @IBInspectable open var maxLabelAccessibilityLabel: String?
 
     /// The brief description displayed in accessibility mode for minimum value handler. If not set, the default is empty String.
     @IBInspectable open var minLabelAccessibilityHint: String?
+    
+    /// The brief description displayed in accessibility mode for minimum value handler. If not set, the default is empty String.
+    @IBInspectable open var idealLabelAccessibilityHint: String?
 
     /// The brief description displayed in accessibility mode for maximum value handler. If not set, the default is empty String.
     @IBInspectable open var maxLabelAccessibilityHint: String?
@@ -231,12 +283,15 @@ import UIKit
     private let sliderLineBetweenHandles: CALayer = CALayer()
 
     private let leftHandle: CALayer = CALayer()
+    private let idealHandle: CALayer = CALayer()
     private let rightHandle: CALayer = CALayer()
 
     fileprivate let minLabel: CATextLayer = CATextLayer()
+    fileprivate let idealLabel: CATextLayer = CATextLayer()
     fileprivate let maxLabel: CATextLayer = CATextLayer()
 
     private var minLabelTextSize: CGSize = .zero
+    private var idealLabelTextSize: CGSize = .zero
     private var maxLabelTextSize: CGSize = .zero
 
     // UIFeedbackGenerator
@@ -257,6 +312,17 @@ import UIKit
         element.accessibilityHint = minLabelAccessibilityHint
         element.accessibilityValue = minLabel.string as? String
         element.accessibilityFrame = convert(leftHandle.frame, to: nil)
+        element.accessibilityTraits = UIAccessibilityTraitAdjustable
+        return element
+    }
+    
+    private var idealHandleAccessibilityElement: UIAccessibilityElement {
+        let element: RangeSeekSliderIdealElement = RangeSeekSliderIdealElement(accessibilityContainer: self)
+        element.isAccessibilityElement = true
+        element.accessibilityLabel = idealLabelAccessibilityLabel
+        element.accessibilityHint = idealLabelAccessibilityHint
+        element.accessibilityValue = idealLabel.string as? String
+        element.accessibilityFrame = convert(idealHandle.frame, to: nil)
         element.accessibilityTraits = UIAccessibilityTraitAdjustable
         return element
     }
@@ -388,7 +454,7 @@ import UIKit
 
     private func setup() {
         isAccessibilityElement = false
-        accessibleElements = [leftHandleAccessibilityElement, rightHandleAccessibilityElement]
+        accessibleElements = [leftHandleAccessibilityElement, idealHandleAccessibilityElement,  rightHandleAccessibilityElement]
 
         // draw the slider line
         layer.addSublayer(sliderLine)
@@ -400,6 +466,11 @@ import UIKit
         leftHandle.cornerRadius = handleDiameter / 2.0
         leftHandle.borderWidth = handleBorderWidth
         layer.addSublayer(leftHandle)
+        
+        // draw the ideal slider handle
+        idealHandle.cornerRadius = handleDiameter / 2.0
+        idealHandle.borderWidth = handleBorderWidth
+        layer.addSublayer(idealHandle)
 
         // draw the maximum slider handle
         rightHandle.cornerRadius = handleDiameter / 2.0
@@ -408,6 +479,7 @@ import UIKit
 
         let handleFrame: CGRect = CGRect(x: 0.0, y: 0.0, width: handleDiameter, height: handleDiameter)
         leftHandle.frame = handleFrame
+        idealHandle.frame = handleFrame
         rightHandle.frame = handleFrame
 
         // draw the text labels
@@ -419,6 +491,12 @@ import UIKit
         minLabel.frame = labelFrame
         minLabel.contentsScale = UIScreen.main.scale
         layer.addSublayer(minLabel)
+        
+        idealLabelFont = UIFont.systemFont(ofSize: labelFontSize)
+        idealLabel.alignmentMode = kCAAlignmentCenter
+        idealLabel.frame = labelFrame
+        idealLabel.contentsScale = UIScreen.main.scale
+        layer.addSublayer(idealLabel)
 
         maxLabelFont = UIFont.systemFont(ofSize: labelFontSize)
         maxLabel.alignmentMode = kCAAlignmentCenter
@@ -474,12 +552,19 @@ import UIKit
 
     private func updateLabelValues() {
         minLabel.isHidden = hideLabels || disableRange
+        idealLabel.isHidden = hideLabels || disableIdeal
         maxLabel.isHidden = hideLabels
 
         if let replacedString = delegate?.rangeSeekSlider(self, stringForMinValue: selectedMinValue) {
             minLabel.string = replacedString
         } else {
             minLabel.string = numberFormatter.string(from: selectedMinValue as NSNumber)
+        }
+        
+        if let replacedString = delegate?.rangeSeekSlider(self, stringForMaxValue: selectedIdealValue){
+            idealLabel.string = replacedString
+        } else {
+            idealLabel.string = numberFormatter.string(from: selectedIdealValue as NSNumber)
         }
 
         if let replacedString = delegate?.rangeSeekSlider(self, stringForMaxValue: selectedMaxValue) {
@@ -490,6 +575,10 @@ import UIKit
 
         if let nsstring = minLabel.string as? NSString {
             minLabelTextSize = nsstring.size(attributes: [NSFontAttributeName: minLabelFont])
+        }
+        
+        if let nsstring = idealLabel.string as? NSString {
+            idealLabelTextSize = nsstring.size(attributes: [NSFontAttributeName: idealLabelFont])
         }
 
         if let nsstring = maxLabel.string as? NSString {
@@ -716,6 +805,23 @@ private final class RangeSeekSliderLeftElement: UIAccessibilityElement {
         guard let slider = accessibilityContainer as? RangeSeekSlider else { return }
         slider.selectedMinValue -= slider.step
         accessibilityValue = slider.minLabel.string as? String
+    }
+}
+
+// MARK: - RangeSeekSliderIdealElement
+
+private final class RangeSeekSliderIdealElement: UIAccessibilityElement {
+    
+    override func accessibilityIncrement() {
+        guard let slider = accessibilityContainer as? RangeSeekSlider else { return }
+        slider.selectedIdealValue += slider.step
+        accessibilityValue = slider.idealLabel.string as? String
+    }
+    
+    override func accessibilityDecrement() {
+        guard let slider = accessibilityContainer as? RangeSeekSlider else { return }
+        slider.selectedIdealValue -= slider.step
+        accessibilityValue = slider.idealLabel.string as? String
     }
 }
 

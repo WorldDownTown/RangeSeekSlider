@@ -23,7 +23,7 @@ final class ViewController: UIViewController {
 
     private func setup() {
         // standard range slider
-        rangeSlider.delegate = self
+        /*rangeSlider.delegate = self
 
         // currency range slider
         rangeSliderCurrency.delegate = self
@@ -53,7 +53,7 @@ final class ViewController: UIViewController {
         rangeSliderCustom.colorBetweenHandles = .red
         rangeSliderCustom.lineHeight = 10.0
         rangeSliderCustom.numberFormatter.positivePrefix = "$"
-        rangeSliderCustom.numberFormatter.positiveSuffix = "M"
+        rangeSliderCustom.numberFormatter.positiveSuffix = "M"*/
     }
 }
 
