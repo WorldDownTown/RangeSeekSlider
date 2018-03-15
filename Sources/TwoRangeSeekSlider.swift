@@ -1,15 +1,13 @@
 //
-//  RangeSeekSlider.swift
+//  TwoRangeSeekSlider.swift
 //  RangeSeekSlider
 //
-//  Created by Keisuke Shoji on 2017/03/09.
-//
+//  Created by Jean-Nicolas DEFOSSE on 15/03/18.
 //
 
 import UIKit
 
-@IBDesignable open class RangeSeekSlider: UIControl {
-    
+@IBDesignable open class TwoRangeSeekSlider: UIControl {
     // MARK: - initializers
     
     public required init?(coder aDecoder: NSCoder) {
@@ -24,7 +22,7 @@ import UIKit
         setup()
     }
     
-    public convenience init(frame: CGRect = .zero, completion: ((RangeSeekSlider) -> Void)? = nil) {
+    public convenience init(frame: CGRect = .zero, completion: ((TwoRangeSeekSlider) -> Void)? = nil) {
         self.init(frame: frame)
         completion?(self)
     }
@@ -32,7 +30,7 @@ import UIKit
     
     // MARK: - open stored properties
     
-    open weak var delegate: RangeSeekSliderDelegate?
+    open weak var delegate: TwoRangeSeekSliderDelegate?
     
     /// The minimum possible value to select in the range
     @IBInspectable open var minValue: CGFloat = 0.0 {
@@ -40,6 +38,7 @@ import UIKit
             refresh()
         }
     }
+    
     
     /// The maximum possible value to select in the range
     @IBInspectable open var maxValue: CGFloat = 100.0 {
@@ -58,8 +57,18 @@ import UIKit
         }
     }
     
+    /// The preselected ideal value
+    /// (note: This should be between selectedMinValue and selectedMaxValue)
+    @IBInspectable open var selectedIdealValue: CGFloat = 50.0 {
+        didSet {
+            if selectedIdealValue < minValue {
+                selectedIdealValue = minValue
+            }
+        }
+    }
+    
     /// The preselected maximum value
-    /// (note: This should be greater than the selectedMinValue)
+    /// (note: This should be greater than the selectedIdealValue)
     @IBInspectable open var selectedMaxValue: CGFloat = 100.0 {
         didSet {
             if selectedMaxValue > maxValue {
@@ -73,6 +82,14 @@ import UIKit
         didSet {
             minLabel.font = minLabelFont as CFTypeRef
             minLabel.fontSize = minLabelFont.pointSize
+        }
+    }
+    
+    /// The i of the ideal value text label. If not set, the default is system font size 12.0.
+    open var idealLabelFont: UIFont = UIFont.systemFont(ofSize: 12.0) {
+        didSet {
+            idealLabel.font = idealLabelFont as CFTypeRef
+            idealLabel.fontSize = idealLabelFont.pointSize
         }
     }
     
@@ -113,6 +130,15 @@ import UIKit
         }
     }
     
+    /// The ideal distance the two selected slider values must be apart. Default is 0.
+    @IBInspectable open var idealDistance: CGFloat = 0.0 {
+        didSet {
+            if idealDistance < 0.0 {
+                idealDistance = 0.0
+            }
+        }
+    }
+    
     /// The maximum distance the two selected slider values must be apart. Default is CGFloat.greatestFiniteMagnitude.
     @IBInspectable open var maxDistance: CGFloat = .greatestFiniteMagnitude {
         didSet {
@@ -124,6 +150,9 @@ import UIKit
     
     /// The color of the minimum value text label. If not set, the default is the tintColor.
     @IBInspectable open var minLabelColor: UIColor?
+    
+    /// The color of the minimum value text label. If not set, the default is the tintColor.
+    @IBInspectable open var idealLabelColor: UIColor?
     
     /// The color of the maximum value text label. If not set, the default is the tintColor.
     @IBInspectable open var maxLabelColor: UIColor?
@@ -156,6 +185,10 @@ import UIKit
     /// (note: this is ignored if <= 0.0)
     @IBInspectable open var step: CGFloat = 0.0
     
+    /// The maxHandleStep value, this control the distance between each handle. If not set the default is 0.0.
+    /// (note: this is ignored if <= 0.0)
+    @IBInspectable open var handleDistance: CGFloat = 0.0
+    
     /// Handle slider with custom image, you can set custom image for your handle
     @IBInspectable open var handleImage: UIImage? {
         didSet {
@@ -169,6 +202,9 @@ import UIKit
             leftHandle.frame = handleFrame
             leftHandle.contents = image.cgImage
             
+            idealHandle.frame = handleFrame
+            idealHandle.contents = image.cgImage
+            
             rightHandle.frame = handleFrame
             rightHandle.contents = image.cgImage
         }
@@ -178,8 +214,10 @@ import UIKit
     @IBInspectable open var handleDiameter: CGFloat = 16.0 {
         didSet {
             leftHandle.cornerRadius = handleDiameter / 2.0
+            idealHandle.cornerRadius = handleDiameter / 2.0
             rightHandle.cornerRadius = handleDiameter / 2.0
             leftHandle.frame = CGRect(x: 0.0, y: 0.0, width: handleDiameter, height: handleDiameter)
+            idealHandle.frame = CGRect(x: 0.0, y: 0.0, width: handleDiameter, height: handleDiameter)
             rightHandle.frame = CGRect(x: 0.0, y: 0.0, width: handleDiameter, height: handleDiameter)
         }
     }
@@ -198,6 +236,7 @@ import UIKit
     @IBInspectable open var handleBorderWidth: CGFloat = 0.0 {
         didSet {
             leftHandle.borderWidth = handleBorderWidth
+            idealHandle.borderWidth = handleBorderWidth
             rightHandle.borderWidth = handleBorderWidth
         }
     }
@@ -212,11 +251,17 @@ import UIKit
     /// The label displayed in accessibility mode for minimum value handler. If not set, the default is empty String.
     @IBInspectable open var minLabelAccessibilityLabel: String?
     
+    /// The label displayed in accessibility mode for minimum value handler. If not set, the default is empty String.
+    @IBInspectable open var idealLabelAccessibilityLabel: String?
+    
     /// The label displayed in accessibility mode for maximum value handler. If not set, the default is empty String.
     @IBInspectable open var maxLabelAccessibilityLabel: String?
     
     /// The brief description displayed in accessibility mode for minimum value handler. If not set, the default is empty String.
     @IBInspectable open var minLabelAccessibilityHint: String?
+    
+    /// The brief description displayed in accessibility mode for minimum value handler. If not set, the default is empty String.
+    @IBInspectable open var idealLabelAccessibilityHint: String?
     
     /// The brief description displayed in accessibility mode for maximum value handler. If not set, the default is empty String.
     @IBInspectable open var maxLabelAccessibilityHint: String?
@@ -224,23 +269,27 @@ import UIKit
     
     // MARK: - private stored properties
     
-    private enum HandleTracking { case none, left, right }
+    private enum HandleTracking { case none, left, ideal, right }
     private var handleTracking: HandleTracking = .none
     
     private let sliderLine: CALayer = CALayer()
     private let sliderLineBetweenHandles: CALayer = CALayer()
     
     private let leftHandle: CALayer = CALayer()
+    private let idealHandle: CALayer = CALayer()
     private let rightHandle: CALayer = CALayer()
     
     fileprivate let minLabel: CATextLayer = CATextLayer()
+    fileprivate let idealLabel: CATextLayer = CATextLayer()
     fileprivate let maxLabel: CATextLayer = CATextLayer()
     
     private var minLabelTextSize: CGSize = .zero
+    private var idealLabelTextSize: CGSize = .zero
     private var maxLabelTextSize: CGSize = .zero
     
     // UIFeedbackGenerator
     private var previousStepMinValue: CGFloat?
+    private var previousStepIdealValue: CGFloat?
     private var previousStepMaxValue: CGFloat?
     
     // strong reference needed for UIAccessibilityContainer
@@ -257,6 +306,17 @@ import UIKit
         element.accessibilityHint = minLabelAccessibilityHint
         element.accessibilityValue = minLabel.string as? String
         element.accessibilityFrame = convert(leftHandle.frame, to: nil)
+        element.accessibilityTraits = UIAccessibilityTraitAdjustable
+        return element
+    }
+    
+    private var idealHandleAccessibilityElement: UIAccessibilityElement {
+        let element: RangeSeekSliderIdealElement = RangeSeekSliderIdealElement(accessibilityContainer: self)
+        element.isAccessibilityElement = true
+        element.accessibilityLabel = idealLabelAccessibilityLabel
+        element.accessibilityHint = idealLabelAccessibilityHint
+        element.accessibilityValue = idealLabel.string as? String
+        element.accessibilityFrame = convert(idealHandle.frame, to: nil)
         element.accessibilityTraits = UIAccessibilityTraitAdjustable
         return element
     }
@@ -298,23 +358,40 @@ import UIKit
         let touchLocation: CGPoint = touch.location(in: self)
         let insetExpansion: CGFloat = -30.0
         let isTouchingLeftHandle: Bool = leftHandle.frame.insetBy(dx: insetExpansion, dy: insetExpansion).contains(touchLocation)
+        let isTouchingIdealHandle: Bool = idealHandle.frame.insetBy(dx: insetExpansion, dy: insetExpansion).contains(touchLocation)
         let isTouchingRightHandle: Bool = rightHandle.frame.insetBy(dx: insetExpansion, dy: insetExpansion).contains(touchLocation)
         
-        guard isTouchingLeftHandle || isTouchingRightHandle else { return false }
+        guard isTouchingLeftHandle || isTouchingIdealHandle || isTouchingRightHandle else { return false }
         
         
         // the touch was inside one of the handles so we're definitely going to start movign one of them. But the handles might be quite close to each other, so now we need to find out which handle the touch was closest too, and activate that one.
         let distanceFromLeftHandle: CGFloat = touchLocation.distance(to: leftHandle.frame.center)
+        let distanceFromIdealHandle: CGFloat = touchLocation.distance(to: idealHandle.frame.center)
         let distanceFromRightHandle: CGFloat = touchLocation.distance(to: rightHandle.frame.center)
         
-        if distanceFromLeftHandle < distanceFromRightHandle && !disableRange {
-            handleTracking = .left
-        } else if selectedMaxValue == maxValue && leftHandle.frame.midX == rightHandle.frame.midX {
-            handleTracking = .left
+        if !disableRange {
+            if distanceFromLeftHandle < distanceFromIdealHandle {
+                handleTracking = .left
+            } else if distanceFromIdealHandle < distanceFromRightHandle {
+                handleTracking = .ideal
+            } else {
+                handleTracking = .right
+            }
         } else {
             handleTracking = .right
         }
-        let handle: CALayer = (handleTracking == .left) ? leftHandle : rightHandle
+        
+        var handle: CALayer = rightHandle
+        switch handleTracking {
+        case .left:
+            handle = leftHandle
+        case .ideal:
+            handle = idealHandle
+        default:
+            break
+        }
+        
+        
         animate(handle: handle, selected: true)
         
         delegate?.didStartTouches(in: self)
@@ -335,13 +412,17 @@ import UIKit
         
         switch handleTracking {
         case .left:
-            selectedMinValue = min(selectedValue, selectedMaxValue)
+            selectedMinValue = min(selectedValue, (selectedIdealValue - handleDistance))
+        case .ideal:
+            if selectedValue >= selectedMinValue + handleDistance && selectedValue <= selectedMaxValue - handleDistance{
+                selectedIdealValue = selectedValue
+            }
         case .right:
             // don't let the dots cross over, (unless range is disabled, in which case just dont let the dot fall off the end of the screen)
             if disableRange && selectedValue >= minValue {
                 selectedMaxValue = selectedValue
             } else {
-                selectedMaxValue = max(selectedValue, selectedMinValue)
+                selectedMaxValue = max(selectedValue, (selectedIdealValue + handleDistance))
             }
         case .none:
             // no need to refresh the view because it is done as a side-effect of setting the property
@@ -354,7 +435,16 @@ import UIKit
     }
     
     open override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
-        let handle: CALayer = (handleTracking == .left) ? leftHandle : rightHandle
+        var handle: CALayer = rightHandle
+        switch handleTracking {
+        case .left:
+            handle = leftHandle
+        case .ideal:
+            handle = idealHandle
+        default:
+            break
+        }
+        
         animate(handle: handle, selected: false)
         handleTracking = .none
         
@@ -388,7 +478,7 @@ import UIKit
     
     private func setup() {
         isAccessibilityElement = false
-        accessibleElements = [leftHandleAccessibilityElement, rightHandleAccessibilityElement]
+        accessibleElements = [leftHandleAccessibilityElement, idealHandleAccessibilityElement,  rightHandleAccessibilityElement]
         
         // draw the slider line
         layer.addSublayer(sliderLine)
@@ -401,6 +491,11 @@ import UIKit
         leftHandle.borderWidth = handleBorderWidth
         layer.addSublayer(leftHandle)
         
+        // draw the ideal slider handle
+        idealHandle.cornerRadius = handleDiameter / 2.0
+        idealHandle.borderWidth = handleBorderWidth
+        layer.addSublayer(idealHandle)
+        
         // draw the maximum slider handle
         rightHandle.cornerRadius = handleDiameter / 2.0
         rightHandle.borderWidth = handleBorderWidth
@@ -408,6 +503,7 @@ import UIKit
         
         let handleFrame: CGRect = CGRect(x: 0.0, y: 0.0, width: handleDiameter, height: handleDiameter)
         leftHandle.frame = handleFrame
+        idealHandle.frame = handleFrame
         rightHandle.frame = handleFrame
         
         // draw the text labels
@@ -419,6 +515,12 @@ import UIKit
         minLabel.frame = labelFrame
         minLabel.contentsScale = UIScreen.main.scale
         layer.addSublayer(minLabel)
+        
+        idealLabelFont = UIFont.systemFont(ofSize: labelFontSize)
+        idealLabel.alignmentMode = kCAAlignmentCenter
+        idealLabel.frame = labelFrame
+        idealLabel.contentsScale = UIScreen.main.scale
+        layer.addSublayer(idealLabel)
         
         maxLabelFont = UIFont.systemFont(ofSize: labelFontSize)
         maxLabel.alignmentMode = kCAAlignmentCenter
@@ -474,12 +576,19 @@ import UIKit
     
     private func updateLabelValues() {
         minLabel.isHidden = hideLabels || disableRange
+        idealLabel.isHidden = hideLabels || disableRange
         maxLabel.isHidden = hideLabels
         
         if let replacedString = delegate?.rangeSeekSlider(self, stringForMinValue: selectedMinValue) {
             minLabel.string = replacedString
         } else {
             minLabel.string = numberFormatter.string(from: selectedMinValue as NSNumber)
+        }
+        
+        if let replacedString = delegate?.rangeSeekSlider(self, stringForIdealValue: selectedIdealValue){
+            idealLabel.string = replacedString
+        } else {
+            idealLabel.string = numberFormatter.string(from: selectedIdealValue as NSNumber)
         }
         
         if let replacedString = delegate?.rangeSeekSlider(self, stringForMaxValue: selectedMaxValue) {
@@ -492,6 +601,10 @@ import UIKit
             minLabelTextSize = nsstring.size(attributes: [NSFontAttributeName: minLabelFont])
         }
         
+        if let nsstring = idealLabel.string as? NSString {
+            idealLabelTextSize = nsstring.size(attributes: [NSFontAttributeName: idealLabelFont])
+        }
+        
         if let nsstring = maxLabel.string as? NSString {
             maxLabelTextSize = nsstring.size(attributes: [NSFontAttributeName: maxLabelFont])
         }
@@ -501,6 +614,7 @@ import UIKit
         let isInitial: Bool = selectedMinValue == minValue && selectedMaxValue == maxValue
         if let initialColor = initialColor?.cgColor, isInitial {
             minLabel.foregroundColor = initialColor
+            idealLabel.foregroundColor = initialColor
             maxLabel.foregroundColor = initialColor
             sliderLineBetweenHandles.backgroundColor = initialColor
             sliderLine.backgroundColor = initialColor
@@ -508,11 +622,14 @@ import UIKit
             let color: CGColor = (handleImage == nil) ? initialColor : UIColor.clear.cgColor
             leftHandle.backgroundColor = color
             leftHandle.borderColor = color
+            idealHandle.backgroundColor = color
+            idealHandle.borderColor = color
             rightHandle.backgroundColor = color
             rightHandle.borderColor = color
         } else {
             let tintCGColor: CGColor = tintColor.cgColor
             minLabel.foregroundColor = minLabelColor?.cgColor ?? tintCGColor
+            idealLabel.foregroundColor = idealLabelColor?.cgColor ?? tintCGColor
             maxLabel.foregroundColor = maxLabelColor?.cgColor ?? tintCGColor
             sliderLineBetweenHandles.backgroundColor = colorBetweenHandles?.cgColor ?? tintCGColor
             sliderLine.backgroundColor = tintCGColor
@@ -525,18 +642,24 @@ import UIKit
             }
             leftHandle.backgroundColor = color
             leftHandle.borderColor = handleBorderColor.map { $0.cgColor }
+            idealHandle.backgroundColor = color
+            idealHandle.borderColor = handleBorderColor.map { $0.cgColor }
             rightHandle.backgroundColor = color
             rightHandle.borderColor = handleBorderColor.map { $0.cgColor }
         }
     }
     
     private func updateAccessibilityElements() {
-        accessibleElements = [leftHandleAccessibilityElement, rightHandleAccessibilityElement]
+        accessibleElements = [leftHandleAccessibilityElement, idealHandleAccessibilityElement, rightHandleAccessibilityElement]
     }
     
     private func updateHandlePositions() {
         leftHandle.position = CGPoint(x: xPositionAlongLine(for: selectedMinValue),
                                       y: sliderLine.frame.midY)
+        
+        
+        idealHandle.position = CGPoint(x: xPositionAlongLine(for: selectedIdealValue),
+                                       y: sliderLine.frame.midY)
         
         rightHandle.position = CGPoint(x: xPositionAlongLine(for: selectedMaxValue),
                                        y: sliderLine.frame.midY)
@@ -552,6 +675,7 @@ import UIKit
         // the center points for the labels are X = the same x position as the relevant handle. Y = the y position of the handle minus half the height of the text label, minus some padding.
         
         minLabel.frame.size = minLabelTextSize
+        idealLabel.frame.size = idealLabelTextSize
         maxLabel.frame.size = maxLabelTextSize
         
         if labelsFixed {
@@ -608,6 +732,8 @@ import UIKit
     private func updateFixedLabelPositions() {
         minLabel.position = CGPoint(x: xPositionAlongLine(for: minValue),
                                     y: sliderLine.frame.minY - (minLabelTextSize.height / 2.0) - (handleDiameter / 2.0) - labelPadding)
+        idealLabel.position = CGPoint(x: frame.width/2,
+                                      y: sliderLine.frame.minY - (idealLabelTextSize.height / 2.0) - (handleDiameter / 2.0) - labelPadding)
         maxLabel.position = CGPoint(x: xPositionAlongLine(for: maxValue),
                                     y: sliderLine.frame.minY - (maxLabelTextSize.height / 2.0) - (handleDiameter / 2.0) - labelPadding)
         if minLabel.frame.minX < 0.0 {
@@ -627,6 +753,12 @@ import UIKit
             }
             previousStepMinValue = selectedMinValue
             
+            selectedIdealValue = CGFloat(roundf(Float(selectedIdealValue / step))) * step
+            if let previousStepIdealValue = previousStepIdealValue, previousStepIdealValue != selectedIdealValue {
+                TapticEngine.selection.feedback()
+            }
+            previousStepIdealValue = selectedIdealValue
+            
             selectedMaxValue = CGFloat(roundf(Float(selectedMaxValue / step))) * step
             if let previousStepMaxValue = previousStepMaxValue, previousStepMaxValue != selectedMaxValue {
                 TapticEngine.selection.feedback()
@@ -642,7 +774,7 @@ import UIKit
                 selectedMinValue = selectedMaxValue - minDistance
             case .right:
                 selectedMaxValue = selectedMinValue + minDistance
-            case .none:
+            case .none, .ideal:
                 break
             }
         } else if diff > maxDistance {
@@ -651,7 +783,7 @@ import UIKit
                 selectedMinValue = selectedMaxValue - maxDistance
             case .right:
                 selectedMaxValue = selectedMinValue + maxDistance
-            case .none:
+            case .none, .ideal:
                 break
             }
         }
@@ -707,15 +839,32 @@ import UIKit
 private final class RangeSeekSliderLeftElement: UIAccessibilityElement {
     
     override func accessibilityIncrement() {
-        guard let slider = accessibilityContainer as? RangeSeekSlider else { return }
+        guard let slider = accessibilityContainer as? TwoRangeSeekSlider else { return }
         slider.selectedMinValue += slider.step
         accessibilityValue = slider.minLabel.string as? String
     }
     
     override func accessibilityDecrement() {
-        guard let slider = accessibilityContainer as? RangeSeekSlider else { return }
+        guard let slider = accessibilityContainer as? TwoRangeSeekSlider else { return }
         slider.selectedMinValue -= slider.step
         accessibilityValue = slider.minLabel.string as? String
+    }
+}
+
+// MARK: - RangeSeekSliderIdealElement
+
+private final class RangeSeekSliderIdealElement: UIAccessibilityElement {
+    
+    override func accessibilityIncrement() {
+        guard let slider = accessibilityContainer as? TwoRangeSeekSlider else { return }
+        slider.selectedIdealValue += slider.step
+        accessibilityValue = slider.idealLabel.string as? String
+    }
+    
+    override func accessibilityDecrement() {
+        guard let slider = accessibilityContainer as? TwoRangeSeekSlider else { return }
+        slider.selectedIdealValue -= slider.step
+        accessibilityValue = slider.idealLabel.string as? String
     }
 }
 
@@ -725,20 +874,19 @@ private final class RangeSeekSliderLeftElement: UIAccessibilityElement {
 private final class RangeSeekSliderRightElement: UIAccessibilityElement {
     
     override func accessibilityIncrement() {
-        guard let slider = accessibilityContainer as? RangeSeekSlider else { return }
+        guard let slider = accessibilityContainer as? TwoRangeSeekSlider else { return }
         slider.selectedMaxValue += slider.step
         slider.refresh()
         accessibilityValue = slider.maxLabel.string as? String
     }
     
     override func accessibilityDecrement() {
-        guard let slider = accessibilityContainer as? RangeSeekSlider else { return }
+        guard let slider = accessibilityContainer as? TwoRangeSeekSlider else { return }
         slider.selectedMaxValue -= slider.step
         slider.refresh()
         accessibilityValue = slider.maxLabel.string as? String
     }
 }
-
 
 // MARK: - CGRect
 
@@ -760,4 +908,3 @@ private extension CGPoint {
         return sqrt(distX * distX + distY * distY)
     }
 }
-

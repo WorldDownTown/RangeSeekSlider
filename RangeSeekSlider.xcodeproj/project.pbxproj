@@ -21,6 +21,8 @@
 		CEF273ED1E70241B003AA995 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEF273EA1E702405003AA995 /* Main.storyboard */; };
 		CEF273EE1E702421003AA995 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF273E21E7023ED003AA995 /* AppDelegate.swift */; };
 		CEF273EF1E702424003AA995 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF273E61E7023F7003AA995 /* ViewController.swift */; };
+		D990D45A205ABC0E00E6186D /* TwoRangeSeekSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D990D459205ABC0E00E6186D /* TwoRangeSeekSlider.swift */; };
+		D990D45C205ABDC000E6186D /* TwoRangeSeekSliderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D990D45B205ABDC000E6186D /* TwoRangeSeekSliderDelegate.swift */; };
 		OBJ_21 /* RangeSeekSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* RangeSeekSlider.swift */; };
 		OBJ_28 /* RangeSeekSliderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* RangeSeekSliderTests.swift */; };
 		OBJ_30 /* RangeSeekSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* RangeSeekSlider.framework */; };
@@ -71,6 +73,8 @@
 		CEF273E61E7023F7003AA995 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Demo/RangeSeekSliderDemo/ViewController.swift; sourceTree = SOURCE_ROOT; };
 		CEF273E91E702405003AA995 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Demo/RangeSeekSliderDemo/Base.lproj/LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
 		CEF273EB1E702405003AA995 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Demo/RangeSeekSliderDemo/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		D990D459205ABC0E00E6186D /* TwoRangeSeekSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoRangeSeekSlider.swift; sourceTree = "<group>"; };
+		D990D45B205ABDC000E6186D /* TwoRangeSeekSliderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoRangeSeekSliderDelegate.swift; sourceTree = "<group>"; };
 		OBJ_12 /* RangeSeekSliderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeSeekSliderTests.swift; sourceTree = "<group>"; };
 		OBJ_14 /* RangeSeekSlider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RangeSeekSlider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_15 /* RangeSeekSliderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = RangeSeekSliderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -189,7 +193,9 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_9 /* RangeSeekSlider.swift */,
+				D990D459205ABC0E00E6186D /* TwoRangeSeekSlider.swift */,
 				CE3D49B51E712B840071E992 /* RangeSeekSliderDelegate.swift */,
+				D990D45B205ABDC000E6186D /* TwoRangeSeekSliderDelegate.swift */,
 				CEBD453B1E9A42E4001AF6DF /* TapticEngine.swift */,
 			);
 			name = RangeSeekSlider;
@@ -336,7 +342,9 @@
 			files = (
 				OBJ_21 /* RangeSeekSlider.swift in Sources */,
 				CEBD453C1E9A42E4001AF6DF /* TapticEngine.swift in Sources */,
+				D990D45C205ABDC000E6186D /* TwoRangeSeekSliderDelegate.swift in Sources */,
 				CE3D49B61E712B840071E992 /* RangeSeekSliderDelegate.swift in Sources */,
+				D990D45A205ABC0E00E6186D /* TwoRangeSeekSlider.swift in Sources */,
 				CE00D96E1E7AA99A0032CA93 /* CustomRangeSeekSlider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
