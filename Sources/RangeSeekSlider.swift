@@ -57,6 +57,18 @@ import UIKit
             }
         }
     }
+    
+    /// The preselected center value
+    /// (note: This should be less than the selectedMaxValue and greater than selectedMinValue)
+    @IBInspectable open var selectedMiddleValue: CGFloat = 0.0 {
+        didSet {
+            if selectedMiddleValue < minValue {
+                selectedMiddleValue = minValue
+            } else if selectedMiddleValue > maxValue {
+                selectedMiddleValue = maxValue
+            }
+        }
+    }
 
     /// The preselected maximum value
     /// (note: This should be greater than the selectedMinValue)
@@ -145,7 +157,15 @@ import UIKit
     @IBInspectable open var disableRange: Bool = false {
         didSet {
             leftHandle.isHidden = disableRange
+            middleHandle.isHidden = disableRange
             minLabel.isHidden = disableRange
+        }
+    }
+    
+    /// If true, a middle handle can be used to select a value within the range
+    @IBInspectable open var enableMiddle: Bool = false {
+        didSet {
+            middleHandle.isHidden = !enableMiddle
         }
     }
 
@@ -184,13 +204,29 @@ import UIKit
             rightHandle.contents = image.cgImage
         }
     }
+    
+    @IBInspectable open var middleHandleImage: UIImage? {
+        didSet {
+            guard let image = middleHandleImage else {
+                return
+            }
+            
+            var handleFrame = CGRect.zero
+            handleFrame.size = image.size
+            
+            middleHandle.frame = handleFrame
+            middleHandle.contents = image.cgImage
+        }
+    }
 
     /// Handle diameter (default 16.0)
     @IBInspectable open var handleDiameter: CGFloat = 16.0 {
         didSet {
             leftHandle.cornerRadius = handleDiameter / 2.0
+            middleHandle.cornerRadius = handleDiameter / 2.0
             rightHandle.cornerRadius = handleDiameter / 2.0
             leftHandle.frame = CGRect(x: 0.0, y: 0.0, width: handleDiameter, height: handleDiameter)
+            middleHandle.frame = CGRect(x: 0.0, y: 0.0, width: handleDiameter, height: handleDiameter)
             rightHandle.frame = CGRect(x: 0.0, y: 0.0, width: handleDiameter, height: handleDiameter)
         }
     }
@@ -210,6 +246,7 @@ import UIKit
         didSet {
             leftHandle.borderWidth = handleBorderWidth
             rightHandle.borderWidth = handleBorderWidth
+            middleHandle.borderWidth = handleBorderWidth
         }
     }
 
@@ -235,13 +272,14 @@ import UIKit
 
     // MARK: - private stored properties
 
-    private enum HandleTracking { case none, left, right }
-    private var handleTracking: HandleTracking = .none
+    private enum HandleTracking { case left, middle, right }
+    private var handleTracking: HandleTracking?
 
     private let sliderLine: CALayer = CALayer()
     private let sliderLineBetweenHandles: CALayer = CALayer()
 
     private let leftHandle: CALayer = CALayer()
+    private let middleHandle: CALayer = CALayer()
     private let rightHandle: CALayer = CALayer()
 
     fileprivate let minLabel: CATextLayer = CATextLayer()
@@ -309,23 +347,35 @@ import UIKit
         let touchLocation: CGPoint = touch.location(in: self)
         let insetExpansion: CGFloat = -30.0
         let isTouchingLeftHandle: Bool = leftHandle.frame.insetBy(dx: insetExpansion, dy: insetExpansion).contains(touchLocation)
+        let isTouchingMiddleHandle: Bool = middleHandle.frame.insetBy(dx: insetExpansion, dy: insetExpansion).contains(touchLocation)
         let isTouchingRightHandle: Bool = rightHandle.frame.insetBy(dx: insetExpansion, dy: insetExpansion).contains(touchLocation)
 
-        guard isTouchingLeftHandle || isTouchingRightHandle else { return false }
+        guard isTouchingLeftHandle || isTouchingMiddleHandle || isTouchingRightHandle else { return false }
 
 
-        // the touch was inside one of the handles so we're definitely going to start movign one of them. But the handles might be quite close to each other, so now we need to find out which handle the touch was closest too, and activate that one.
+        // the touch was inside one of the handles so we're definitely going to start moving one of them.
+        // But the handles might be quite close to each other, so now we need to find out which handle the touch was closest too, and activate that one.
         let distanceFromLeftHandle: CGFloat = touchLocation.distance(to: leftHandle.frame.center)
+        let distanceFromMiddleHandle: CGFloat = touchLocation.distance(to: middleHandle.frame.center)
         let distanceFromRightHandle: CGFloat = touchLocation.distance(to: rightHandle.frame.center)
 
-        if distanceFromLeftHandle < distanceFromRightHandle && !disableRange {
+        if distanceFromLeftHandle < distanceFromMiddleHandle && !disableRange {
             handleTracking = .left
+        } else if distanceFromMiddleHandle < distanceFromRightHandle && !disableRange {
+            handleTracking = .middle
         } else if selectedMaxValue == maxValue && leftHandle.frame.midX == rightHandle.frame.midX {
             handleTracking = .left
         } else {
             handleTracking = .right
         }
-        let handle: CALayer = (handleTracking == .left) ? leftHandle : rightHandle
+        
+        let handle: CALayer
+        switch handleTracking! {
+        case .left: handle = leftHandle
+        case .middle: handle = middleHandle
+        case .right: handle = rightHandle
+        }
+        
         animate(handle: handle, selected: true)
 
         delegate?.didStartTouches(in: self)
@@ -334,7 +384,7 @@ import UIKit
     }
 
     open override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-        guard handleTracking != .none else { return false }
+        guard let handleTracking = handleTracking else { return false }
 
         let location: CGPoint = touch.location(in: self)
 
@@ -347,6 +397,8 @@ import UIKit
         switch handleTracking {
         case .left:
             selectedMinValue = min(selectedValue, selectedMaxValue)
+        case .middle:
+            selectedMiddleValue = selectedValue
         case .right:
             // don't let the dots cross over, (unless range is disabled, in which case just dont let the dot fall off the end of the screen)
             if disableRange && selectedValue >= minValue {
@@ -354,9 +406,6 @@ import UIKit
             } else {
                 selectedMaxValue = max(selectedValue, selectedMinValue)
             }
-        case .none:
-            // no need to refresh the view because it is done as a side-effect of setting the property
-            break
         }
 
         refresh()
@@ -365,9 +414,17 @@ import UIKit
     }
 
     open override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
-        let handle: CALayer = (handleTracking == .left) ? leftHandle : rightHandle
+        guard let handleTracking = handleTracking else { return }
+        
+        let handle: CALayer
+        switch handleTracking {
+        case .left: handle = leftHandle
+        case .middle: handle = middleHandle
+        case .right: handle = rightHandle
+        }
+        
         animate(handle: handle, selected: false)
-        handleTracking = .none
+        self.handleTracking = nil
 
         delegate?.didEndTouches(in: self)
     }
@@ -411,6 +468,12 @@ import UIKit
         leftHandle.cornerRadius = handleDiameter / 2.0
         leftHandle.borderWidth = handleBorderWidth
         layer.addSublayer(leftHandle)
+        
+        // draw the middle slider handle
+        middleHandle.cornerRadius = handleDiameter / 2.0
+        middleHandle.borderWidth = handleBorderWidth
+        middleHandle.isHidden = !enableMiddle
+        layer.addSublayer(middleHandle)
 
         // draw the maximum slider handle
         rightHandle.cornerRadius = handleDiameter / 2.0
@@ -419,6 +482,7 @@ import UIKit
 
         let handleFrame: CGRect = CGRect(x: 0.0, y: 0.0, width: handleDiameter, height: handleDiameter)
         leftHandle.frame = handleFrame
+        middleHandle.frame = handleFrame
         rightHandle.frame = handleFrame
 
         // draw the text labels
@@ -520,6 +584,10 @@ import UIKit
             leftHandle.backgroundColor = leftColor
             leftHandle.borderColor = leftColor
             
+            let middleColor: CGColor = (middleHandleImage == nil) ? initialColor : UIColor.clear.cgColor
+            middleHandle.backgroundColor = middleColor
+            middleHandle.borderColor = middleColor
+            
             let rightColor: CGColor = (rightHandleImage == nil) ? initialColor : UIColor.clear.cgColor
             rightHandle.backgroundColor = rightColor
             rightHandle.borderColor = rightColor
@@ -534,6 +602,10 @@ import UIKit
             leftHandle.backgroundColor = leftColor
             leftHandle.borderColor = handleBorderColor.map { $0.cgColor }
             
+            let middleColor: CGColor = (middleHandleImage == nil) ? (handleColor?.cgColor ?? tintCGColor) : UIColor.clear.cgColor
+            middleHandle.backgroundColor = leftColor
+            middleHandle.borderColor = handleBorderColor.map { $0.cgColor }
+            
             let rightColor: CGColor = (rightHandleImage == nil) ? (handleColor?.cgColor ?? tintCGColor) : UIColor.clear.cgColor
             rightHandle.backgroundColor = rightColor
             rightHandle.borderColor = handleBorderColor.map { $0.cgColor }
@@ -543,11 +615,14 @@ import UIKit
     private func updateAccessibilityElements() {
         accessibleElements = [leftHandleAccessibilityElement, rightHandleAccessibilityElement]
     }
-
+    
     private func updateHandlePositions() {
         leftHandle.position = CGPoint(x: xPositionAlongLine(for: selectedMinValue),
                                       y: sliderLine.frame.midY)
-
+        
+        middleHandle.position = CGPoint(x: xPositionAlongLine(for: selectedMiddleValue),
+                                        y: sliderLine.frame.midY)
+        
         rightHandle.position = CGPoint(x: xPositionAlongLine(for: selectedMaxValue),
                                        y: sliderLine.frame.midY)
 
@@ -644,25 +719,27 @@ import UIKit
             previousStepMaxValue = selectedMaxValue
         }
 
-        let diff: CGFloat = selectedMaxValue - selectedMinValue
-
-        if diff < minDistance {
-            switch handleTracking {
-            case .left:
-                selectedMinValue = selectedMaxValue - minDistance
-            case .right:
-                selectedMaxValue = selectedMinValue + minDistance
-            case .none:
-                break
-            }
-        } else if diff > maxDistance {
-            switch handleTracking {
-            case .left:
-                selectedMinValue = selectedMaxValue - maxDistance
-            case .right:
-                selectedMaxValue = selectedMinValue + maxDistance
-            case .none:
-                break
+        if let handleTracking = handleTracking {
+            let diff: CGFloat = selectedMaxValue - selectedMinValue
+            
+            if diff < minDistance {
+                switch handleTracking {
+                case .left:
+                    selectedMinValue = selectedMaxValue - minDistance
+                case .middle:
+                break // No min distance for middle
+                case .right:
+                    selectedMaxValue = selectedMinValue + minDistance
+                }
+            } else if diff > maxDistance {
+                switch handleTracking {
+                case .left:
+                    selectedMinValue = selectedMaxValue - maxDistance
+                case .middle:
+                break // No max distance for middle
+                case .right:
+                    selectedMaxValue = selectedMinValue + maxDistance
+                }
             }
         }
 
@@ -672,6 +749,12 @@ import UIKit
         }
         if selectedMaxValue > maxValue {
             selectedMaxValue = maxValue
+        }
+        if selectedMiddleValue < selectedMinValue {
+            selectedMiddleValue = selectedMinValue
+        }
+        if selectedMiddleValue > selectedMaxValue {
+            selectedMiddleValue = selectedMaxValue
         }
 
         // update the frames in a transaction so that the tracking doesn't continue until the frame has moved.

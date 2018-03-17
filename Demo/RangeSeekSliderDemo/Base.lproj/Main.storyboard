@@ -110,6 +110,11 @@
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="image" keyPath="leftHandleImage" value="custom-handle"/>
                                             <userDefinedRuntimeAttribute type="image" keyPath="rightHandleImage" value="custom-handle"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="enableMiddle" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="image" keyPath="middleHandleImage" value="custom-handle"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="selectedMiddleValue">
+                                                <real key="value" value="50"/>
+                                            </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Range with Step:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4K8-GF-10z">
