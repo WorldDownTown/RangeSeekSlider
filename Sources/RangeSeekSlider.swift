@@ -158,6 +158,12 @@ import UIKit
     /// (note: this is ignored if <= 0.0)
     @IBInspectable open var step: CGFloat = 0.0
 
+    /// The smallest value the left handle of the slider could be dragged to. Default is 0.
+    @IBInspectable open var minTrackingValue: CGFloat = 0.0
+    
+   /// The largest value the right handle of the slider could be dragged to. Default is 0.
+    @IBInspectable open var maxTrackingValue: CGFloat = 0.0
+    
     /// Handle slider with custom image, you can set custom image for your handle
     @IBInspectable open var handleImage: UIImage? {
         didSet {
@@ -340,13 +346,16 @@ import UIKit
 
         switch handleTracking {
         case .left:
-            selectedMinValue = min(selectedValue, selectedMaxValue)
+            let newMinValue = min(selectedValue, selectedMaxValue)
+            selectedMinValue = (newMinValue <= minTrackingValue) ? minTrackingValue : newMinValue
         case .right:
             // don't let the dots cross over, (unless range is disabled, in which case just dont let the dot fall off the end of the screen)
             if disableRange && selectedValue >= minValue {
                 selectedMaxValue = selectedValue
             } else {
-                selectedMaxValue = max(selectedValue, selectedMinValue)
+                let newMaxValue = max(selectedValue, selectedMinValue)
+                selectedMaxValue = (newMaxValue >=  maxTrackingValue) ? maxTrackingValue : newMaxValue
+                
             }
         case .none:
             // no need to refresh the view because it is done as a side-effect of setting the property
