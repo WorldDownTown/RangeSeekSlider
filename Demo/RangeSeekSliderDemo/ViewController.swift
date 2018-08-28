@@ -51,6 +51,7 @@ final class ViewController: UIViewController {
         rangeSliderCustom.selectedMinValue = 40.0
         rangeSliderCustom.selectedMaxValue = 60.0
         rangeSliderCustom.minDistance = 20.0
+        rangeSliderCustom.maxDistance = 70.0
         rangeSliderCustom.handleImage = #imageLiteral(resourceName: "custom-handle")
         rangeSliderCustom.selectedHandleDiameterMultiplier = 1.0
         rangeSliderCustom.colorBeforeLeftHandle = .yellow
