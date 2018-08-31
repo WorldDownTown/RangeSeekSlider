@@ -597,17 +597,17 @@ import UIKit
             maxLabel.string = numberFormatter.string(from: selectedMaxValue as NSNumber)
         }
         
-        if let nsstring = minLabel.string as? NSString {
-            minLabelTextSize = nsstring.size(attributes: [NSFontAttributeName: minLabelFont])
-        }
-        
-        if let nsstring = idealLabel.string as? NSString {
-            idealLabelTextSize = nsstring.size(attributes: [NSFontAttributeName: idealLabelFont])
-        }
-        
-        if let nsstring = maxLabel.string as? NSString {
-            maxLabelTextSize = nsstring.size(attributes: [NSFontAttributeName: maxLabelFont])
-        }
+		if let nsstring = minLabel.string as? NSString {
+			minLabelTextSize = nsstring.size(withAttributes: [NSAttributedStringKey.font: minLabelFont])
+		}
+		
+		if let nsstring = idealLabel.string as? NSString {
+			idealLabelTextSize = nsstring.size(withAttributes: [NSAttributedStringKey.font: idealLabelFont])
+		}
+		
+		if let nsstring = maxLabel.string as? NSString {
+			maxLabelTextSize = nsstring.size(withAttributes: [NSAttributedStringKey.font: maxLabelFont])
+		}
     }
     
     private func updateColors() {
