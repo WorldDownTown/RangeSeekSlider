@@ -383,7 +383,37 @@ import UIKit
     /// When subclassing **RangeSeekSlider** and setting each item in **setupStyle()**, the design is reflected in Interface Builder as well.
     open func setupStyle() {}
     
-    
+	public func onTouch(location: CGPoint){
+		animate(handle: rightHandle, selected: true)
+		
+		// find out the percentage along the line we are in x coordinate terms (subtracting half the frames width to account for moving the middle of the handle, not the left hand side)
+		let percentage: CGFloat = (location.x - sliderLine.frame.minX - handleDiameter / 2.0) / (sliderLine.frame.maxX - sliderLine.frame.minX)
+		
+		// multiply that percentage by self.maxValue to get the new selected minimum value
+		let selectedValue: CGFloat = percentage * (maxValue - minValue) + minValue
+		
+		switch handleTracking {
+		case .left:
+			selectedMinValue = min(selectedValue, selectedMaxValue)
+		case .right:
+			// don't let the dots cross over, (unless range is disabled, in which case just dont let the dot fall off the end of the screen)
+			if disableRange && selectedValue >= minValue {
+				selectedMaxValue = selectedValue
+			} else {
+				selectedMaxValue = max(selectedValue, selectedMinValue)
+			}
+		case .none:
+			// no need to refresh the view because it is done as a side-effect of setting the property
+			selectedMaxValue = selectedValue
+			break
+		}
+		
+		refresh()
+		
+		animate(handle: rightHandle, selected: false)
+	}
+	
+	
     // MARK: - private methods
     
     private func setup() {
