@@ -347,15 +347,14 @@ import UIKit
         switch handleTracking {
         case .left:
             let newMinValue = min(selectedValue, selectedMaxValue)
-            selectedMinValue = (newMinValue <= minTrackingValue) ? minTrackingValue : newMinValue
+            selectedMinValue = max(newMinValue, minTrackingValue)
         case .right:
             // don't let the dots cross over, (unless range is disabled, in which case just dont let the dot fall off the end of the screen)
             if disableRange && selectedValue >= minValue {
                 selectedMaxValue = selectedValue
             } else {
                 let newMaxValue = max(selectedValue, selectedMinValue)
-                selectedMaxValue = (newMaxValue >=  maxTrackingValue) ? maxTrackingValue : newMaxValue
-                
+                selectedMaxValue = maxTrackingValue > 0 ? min(newMaxValue, maxTrackingValue) : newMaxValue
             }
         case .none:
             // no need to refresh the view because it is done as a side-effect of setting the property
