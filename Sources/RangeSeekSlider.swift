@@ -257,7 +257,7 @@ import UIKit
         element.accessibilityHint = minLabelAccessibilityHint
         element.accessibilityValue = minLabel.string as? String
         element.accessibilityFrame = convert(leftHandle.frame, to: nil)
-        element.accessibilityTraits = UIAccessibilityTraitAdjustable
+        element.accessibilityTraits = UIAccessibilityTraits.adjustable
         return element
     }
 
@@ -268,7 +268,7 @@ import UIKit
         element.accessibilityHint = maxLabelAccessibilityHint
         element.accessibilityValue = maxLabel.string as? String
         element.accessibilityFrame = convert(rightHandle.frame, to: nil)
-        element.accessibilityTraits = UIAccessibilityTraitAdjustable
+        element.accessibilityTraits = UIAccessibilityTraits.adjustable
         return element
     }
 
@@ -288,7 +288,7 @@ import UIKit
     }
 
     open override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIViewNoIntrinsicMetric, height: 65.0)
+        return CGSize(width: UIView.noIntrinsicMetric, height: 65.0)
     }
 
 
@@ -415,13 +415,13 @@ import UIKit
         let labelFrame: CGRect = CGRect(x: 0.0, y: 0.0, width: 75.0, height: 14.0)
 
         minLabelFont = UIFont.systemFont(ofSize: labelFontSize)
-        minLabel.alignmentMode = kCAAlignmentCenter
+        minLabel.alignmentMode = CATextLayerAlignmentMode.center
         minLabel.frame = labelFrame
         minLabel.contentsScale = UIScreen.main.scale
         layer.addSublayer(minLabel)
 
         maxLabelFont = UIFont.systemFont(ofSize: labelFontSize)
-        maxLabel.alignmentMode = kCAAlignmentCenter
+        maxLabel.alignmentMode = CATextLayerAlignmentMode.center
         maxLabel.frame = labelFrame
         maxLabel.contentsScale = UIScreen.main.scale
         layer.addSublayer(maxLabel)
@@ -489,11 +489,11 @@ import UIKit
         }
 
         if let nsstring = minLabel.string as? NSString {
-            minLabelTextSize = nsstring.size(attributes: [NSFontAttributeName: minLabelFont])
+            minLabelTextSize = nsstring.size(withAttributes: [NSAttributedString.Key.font: minLabelFont])
         }
 
         if let nsstring = maxLabel.string as? NSString {
-            maxLabelTextSize = nsstring.size(attributes: [NSFontAttributeName: maxLabelFont])
+            maxLabelTextSize = nsstring.size(withAttributes: [NSAttributedString.Key.font: maxLabelFont])
         }
     }
 
@@ -691,7 +691,7 @@ import UIKit
 
         CATransaction.begin()
         CATransaction.setAnimationDuration(0.3)
-        CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut))
+        CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut))
         handle.transform = transform
 
         // the label above the handle will need to move too if the handle changes size
