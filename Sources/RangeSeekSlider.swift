@@ -183,7 +183,7 @@ import UIKit
     }
 
     /// Handle diameter (default 16.0)
-    @IBInspectable open var handleDiameter: CGFloat = 24.0 {
+    @IBInspectable open var handleDiameter: CGFloat = 31.0 {
         didSet {
             leftHandle.cornerRadius = handleDiameter / 2.0
             rightHandle.cornerRadius = handleDiameter / 2.0
