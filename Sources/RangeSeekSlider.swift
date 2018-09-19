@@ -183,7 +183,7 @@ import UIKit
     }
 
     /// Handle diameter (default 16.0)
-    @IBInspectable open var handleDiameter: CGFloat = 16.0 {
+    @IBInspectable open var handleDiameter: CGFloat = 24.0 {
         didSet {
             leftHandle.cornerRadius = handleDiameter / 2.0
             rightHandle.cornerRadius = handleDiameter / 2.0
@@ -241,9 +241,9 @@ import UIKit
     private let sliderLineBetweenHandles: CALayer = CALayer()
     private let sliderLineAfterRightHandle: CALayer = CALayer()
     
-    private let leftHandle: CALayer = CALayer()
-    private let rightHandle: CALayer = CALayer()
-
+    private let leftHandle: CAShapeLayer = CAShapeLayer()
+    private let rightHandle: CAShapeLayer = CAShapeLayer()
+    
     fileprivate let minLabel: CATextLayer = CATextLayer()
     fileprivate let maxLabel: CATextLayer = CATextLayer()
 
@@ -403,6 +403,23 @@ import UIKit
         isAccessibilityElement = false
         accessibleElements = [leftHandleAccessibilityElement, rightHandleAccessibilityElement]
 
+        leftHandle.path = UIBezierPath(roundedRect: CGRect(x: 0.0, y: 0.0, width: handleDiameter, height: handleDiameter), cornerRadius: (handleDiameter / 2.0)).cgPath
+        leftHandle.fillColor = UIColor.white.cgColor
+        leftHandle.shadowColor = UIColor.black.cgColor
+        leftHandle.shadowPath = leftHandle.path
+        leftHandle.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        leftHandle.shadowOpacity = 0.2
+        leftHandle.shadowRadius = handleDiameter / 2.0
+        
+        
+        rightHandle.path = UIBezierPath(roundedRect: CGRect(x: 0.0, y: 0.0, width: handleDiameter, height: handleDiameter), cornerRadius: (handleDiameter / 2.0)).cgPath
+        rightHandle.fillColor = UIColor.white.cgColor
+        rightHandle.shadowColor = UIColor.black.cgColor
+        rightHandle.shadowPath = rightHandle.path
+        rightHandle.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        rightHandle.shadowOpacity = 0.2
+        rightHandle.shadowRadius = handleDiameter / 2.0
+        
         // draw the slider line
         layer.addSublayer(sliderLine)
 
@@ -415,16 +432,21 @@ import UIKit
         leftHandle.cornerRadius = handleDiameter / 2.0
         leftHandle.borderWidth = handleBorderWidth
         layer.addSublayer(leftHandle)
-
+        
+        
         // draw the maximum slider handle
         rightHandle.cornerRadius = handleDiameter / 2.0
         rightHandle.borderWidth = handleBorderWidth
         layer.addSublayer(rightHandle)
-
+        
+        
         let handleFrame: CGRect = CGRect(x: 0.0, y: 0.0, width: handleDiameter, height: handleDiameter)
         leftHandle.frame = handleFrame
         rightHandle.frame = handleFrame
-
+        
+       
+        
+        
         // draw the text labels
         let labelFontSize: CGFloat = 12.0
         let labelFrame: CGRect = CGRect(x: 0.0, y: 0.0, width: 75.0, height: 14.0)
@@ -546,9 +568,9 @@ import UIKit
             } else {
                 color = handleColor?.cgColor ?? tintCGColor
             }
-            leftHandle.backgroundColor = color
+            leftHandle.fillColor = color
             leftHandle.borderColor = handleBorderColor.map { $0.cgColor }
-            rightHandle.backgroundColor = color
+            rightHandle.fillColor = color
             rightHandle.borderColor = handleBorderColor.map { $0.cgColor }
         }
     }
@@ -560,10 +582,9 @@ import UIKit
     private func updateHandlePositions() {
         leftHandle.position = CGPoint(x: xPositionAlongLine(for: selectedMinValue),
                                       y: sliderLine.frame.midY)
-
+        
         rightHandle.position = CGPoint(x: xPositionAlongLine(for: selectedMaxValue),
                                        y: sliderLine.frame.midY)
-
         // positioning for the dist slider line
         sliderLineBeforeLeftHandle.frame = CGRect(x: sliderLine.frame.minX,
                                                 y: sliderLine.frame.minY,
