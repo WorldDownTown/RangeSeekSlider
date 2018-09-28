@@ -34,7 +34,7 @@ open class TapticEngine {
         private static func makeGenerator(_ style: ImpactStyle) -> Any? {
             guard #available(iOS 10.0, *) else { return nil }
 
-            let feedbackStyle: UIImpactFeedbackStyle
+            let feedbackStyle: UIImpactFeedbackGenerator.FeedbackStyle
             switch style {
             case .light:
                 feedbackStyle = .light
@@ -129,7 +129,7 @@ open class TapticEngine {
             guard #available(iOS 10.0, *) else { return }
             guard let generator = generator as? UINotificationFeedbackGenerator else { return }
 
-            let feedbackType: UINotificationFeedbackType
+            let feedbackType: UINotificationFeedbackGenerator.FeedbackType
             switch type {
             case .success:
                 feedbackType = .success
