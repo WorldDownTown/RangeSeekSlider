@@ -431,7 +431,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = jp.shoji.RangeSeekSliderDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -479,7 +479,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = jp.shoji.RangeSeekSliderDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -504,6 +504,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = RangeSeekSlider;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SWIFT_VERSION = 4.2;
 				TARGET_NAME = RangeSeekSlider;
 			};
 			name = Debug;
@@ -527,6 +528,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = RangeSeekSlider;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SWIFT_VERSION = 4.2;
 				TARGET_NAME = RangeSeekSlider;
 			};
 			name = Release;
@@ -546,6 +548,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_VERSION = 4.2;
 				TARGET_NAME = RangeSeekSliderTests;
 			};
 			name = Debug;
@@ -565,6 +568,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_VERSION = 4.2;
 				TARGET_NAME = RangeSeekSliderTests;
 			};
 			name = Release;
@@ -587,7 +591,7 @@
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = SWIFT_PACKAGE;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 				USE_HEADERMAP = NO;
 			};
 			name = Debug;
@@ -608,7 +612,7 @@
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = SWIFT_PACKAGE;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 				USE_HEADERMAP = NO;
 			};
 			name = Release;
