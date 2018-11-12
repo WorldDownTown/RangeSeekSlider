@@ -55,6 +55,7 @@ import UIKit
             if selectedMinValue < minValue {
                 selectedMinValue = minValue
             }
+            self.setNeedsLayout()
         }
     }
 
@@ -65,6 +66,7 @@ import UIKit
             if selectedMaxValue > maxValue {
                 selectedMaxValue = maxValue
             }
+            self.setNeedsLayout()
         }
     }
 
