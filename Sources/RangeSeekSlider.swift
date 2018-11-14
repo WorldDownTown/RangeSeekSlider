@@ -55,6 +55,7 @@ import UIKit
             if selectedMinValue < minValue {
                 selectedMinValue = minValue
             }
+            self.setNeedsLayout()
         }
     }
 
@@ -65,6 +66,7 @@ import UIKit
             if selectedMaxValue > maxValue {
                 selectedMaxValue = maxValue
             }
+            self.setNeedsLayout()
         }
     }
 
@@ -83,6 +85,21 @@ import UIKit
             maxLabel.fontSize = maxLabelFont.pointSize
         }
     }
+
+    /// Changes the minimum value text label position. true = label will be positioned below the slider. false = label will be positioned above the slider.
+    @IBInspectable open var positionMinLabelAtBottom: Bool = false {
+        didSet {
+            updateLabelPositions()
+        }
+    }
+
+    /// Changes the maximum value text label position. true = label will be positioned below the slider. false = label will be positioned above the slider.
+    @IBInspectable open var positionMaxLabelAtBottom: Bool = false {
+        didSet {
+            updateLabelPositions()
+        }
+    }
+
 
     /// Each handle in the slider has a label above it showing the current selected value. By default, this is displayed as a decimal format.
     /// You can update this default here by updating properties of NumberFormatter. For example, you could supply a currency style, or a prefix or suffix.
@@ -489,11 +506,11 @@ import UIKit
         }
 
         if let nsstring = minLabel.string as? NSString {
-            minLabelTextSize = nsstring.size(attributes: [NSFontAttributeName: minLabelFont])
+            minLabelTextSize = nsstring.size(withAttributes: [NSAttributedStringKey.font: minLabelFont])
         }
 
         if let nsstring = maxLabel.string as? NSString {
-            maxLabelTextSize = nsstring.size(attributes: [NSFontAttributeName: maxLabelFont])
+            maxLabelTextSize = nsstring.size(withAttributes: [NSAttributedStringKey.font: maxLabelFont])
         }
     }
 
@@ -561,11 +578,19 @@ import UIKit
 
         let minSpacingBetweenLabels: CGFloat = 8.0
 
+        var minLabelY: CGFloat = leftHandle.frame.minY - (minLabelTextSize.height / 2.0) - labelPadding
+        if positionMinLabelAtBottom {
+            minLabelY = leftHandle.frame.maxY + (minLabelTextSize.height / 2.0) + labelPadding
+        }
         let newMinLabelCenter: CGPoint = CGPoint(x: leftHandle.frame.midX,
-                                                 y: leftHandle.frame.minY - (minLabelTextSize.height / 2.0) - labelPadding)
+                                                 y: minLabelY)
 
+        var maxLabelY: CGFloat = rightHandle.frame.minY - (maxLabelTextSize.height / 2.0) - labelPadding
+        if positionMaxLabelAtBottom {
+            maxLabelY = rightHandle.frame.maxY + (maxLabelTextSize.height / 2.0) + labelPadding
+        }
         let newMaxLabelCenter: CGPoint = CGPoint(x: rightHandle.frame.midX,
-                                                 y: rightHandle.frame.minY - (maxLabelTextSize.height / 2.0) - labelPadding)
+                                                 y: maxLabelY)
 
         let newLeftMostXInMaxLabel: CGFloat = newMaxLabelCenter.x - maxLabelTextSize.width / 2.0
         let newRightMostXInMinLabel: CGFloat = newMinLabelCenter.x + minLabelTextSize.width / 2.0
@@ -606,10 +631,20 @@ import UIKit
     }
 
     private func updateFixedLabelPositions() {
+        var minLabelY: CGFloat = sliderLine.frame.minY - (minLabelTextSize.height / 2.0) - (handleDiameter / 2.0) - labelPadding
+        if positionMinLabelAtBottom {
+            minLabelY = sliderLine.frame.maxY + (minLabelTextSize.height / 2.0) + (handleDiameter / 2.0) + labelPadding
+        }
+        var maxLabelY: CGFloat = sliderLine.frame.minY - (maxLabelTextSize.height / 2.0) - (handleDiameter / 2.0) - labelPadding
+        if positionMaxLabelAtBottom {
+            maxLabelY = sliderLine.frame.maxY + (maxLabelTextSize.height / 2.0) + (handleDiameter / 2.0) + labelPadding
+        }
+
         minLabel.position = CGPoint(x: xPositionAlongLine(for: minValue),
-                                    y: sliderLine.frame.minY - (minLabelTextSize.height / 2.0) - (handleDiameter / 2.0) - labelPadding)
+                                    y: minLabelY)
         maxLabel.position = CGPoint(x: xPositionAlongLine(for: maxValue),
-                                    y: sliderLine.frame.minY - (maxLabelTextSize.height / 2.0) - (handleDiameter / 2.0) - labelPadding)
+                                    y: maxLabelY)
+
         if minLabel.frame.minX < 0.0 {
             minLabel.frame.origin.x = 0.0
         }
