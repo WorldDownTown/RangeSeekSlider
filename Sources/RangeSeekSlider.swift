@@ -729,6 +729,10 @@ import UIKit
         
         CATransaction.commit()
     }
+	
+	public func deselectRightHandle(){
+		animate(handle: rightHandle, selected: false)
+	}
 }
 
 
