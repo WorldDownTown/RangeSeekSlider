@@ -276,9 +276,11 @@
 					CE9937541E70236800EA982A = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = S3LY459S86;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 					};
 					OBJ_16 = {
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 					};
 					OBJ_23 = {
@@ -431,7 +433,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = jp.shoji.RangeSeekSliderDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -479,7 +482,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = jp.shoji.RangeSeekSliderDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -504,6 +508,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = RangeSeekSlider;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				TARGET_NAME = RangeSeekSlider;
 			};
 			name = Debug;
@@ -527,6 +533,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = RangeSeekSlider;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				TARGET_NAME = RangeSeekSlider;
 			};
 			name = Release;
@@ -546,6 +554,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_VERSION = 4.2;
 				TARGET_NAME = RangeSeekSliderTests;
 			};
 			name = Debug;
@@ -565,6 +574,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_VERSION = 4.2;
 				TARGET_NAME = RangeSeekSliderTests;
 			};
 			name = Release;
