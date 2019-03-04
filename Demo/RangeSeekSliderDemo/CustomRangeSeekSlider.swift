@@ -32,7 +32,6 @@ import UIKit
         handleColor = pink
         minLabelColor = pink
         maxLabelColor = pink
-        colorBetweenHandles = pink
         tintColor = gray
         numberFormatter.locale = Locale(identifier: "ja_JP")
         numberFormatter.numberStyle = .currency
