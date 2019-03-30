@@ -374,7 +374,7 @@ import UIKit
 
     open override func index(ofAccessibilityElement element: Any) -> Int {
         guard let element = element as? UIAccessibilityElement else { return 0 }
-        return accessibleElements.index(of: element) ?? 0
+        return accessibleElements.firstIndex(of: element) ?? 0
     }
 
 
