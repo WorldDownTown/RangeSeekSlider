@@ -101,8 +101,10 @@ import UIKit
         }
     }
 
-    /// fixes the labels above the slider controls. true: labels will be fixed to both ends. false: labels will move with the handles. Default is false.
+    /// fixes the labels on the edges of the slider controls. true: labels will be fixed to both ends. false: labels will move with the handles. Default is false.
     @IBInspectable open var labelsFixed: Bool = false
+    /// render the labels above the slider control. true: labels wil be above the slider. false: labels will be below
+    @IBInspectable open var labelsAbove: Bool = false
 
     /// The minimum distance the two selected slider values must be apart. Default is 0.
     @IBInspectable open var minDistance: CGFloat = 0.0 {
@@ -174,6 +176,9 @@ import UIKit
         }
     }
 
+    /// Handle offset (default (x:0, y:0))
+    @IBInspectable open var handleOffset: CGPoint = CGPoint(x: 0, y: 0)
+    
     /// Handle diameter (default 16.0)
     @IBInspectable open var handleDiameter: CGFloat = 16.0 {
         didSet {
@@ -535,11 +540,11 @@ import UIKit
     }
 
     private func updateHandlePositions() {
-        leftHandle.position = CGPoint(x: xPositionAlongLine(for: selectedMinValue),
-                                      y: sliderLine.frame.midY)
+        leftHandle.position = CGPoint(x: xPositionAlongLine(for: selectedMinValue) + handleOffset.x,
+                                      y: sliderLine.frame.midY + handleOffset.y)
 
-        rightHandle.position = CGPoint(x: xPositionAlongLine(for: selectedMaxValue),
-                                       y: sliderLine.frame.midY)
+        rightHandle.position = CGPoint(x: xPositionAlongLine(for: selectedMaxValue) + handleOffset.x,
+                                       y: sliderLine.frame.midY + handleOffset.y)
 
         // positioning for the dist slider line
         sliderLineBetweenHandles.frame = CGRect(x: leftHandle.position.x,
@@ -562,10 +567,10 @@ import UIKit
         let minSpacingBetweenLabels: CGFloat = 8.0
 
         let newMinLabelCenter: CGPoint = CGPoint(x: leftHandle.frame.midX,
-                                                 y: leftHandle.frame.maxY + (minLabelTextSize.height/2) + labelPadding)
+                                                 y: labelsAbove ? leftHandle.frame.minY - (minLabelTextSize.height/2) - labelPadding : leftHandle.frame.maxY + (minLabelTextSize.height/2) + labelPadding)
 
         let newMaxLabelCenter: CGPoint = CGPoint(x: rightHandle.frame.midX,
-                                                 y: rightHandle.frame.maxY + (maxLabelTextSize.height/2) + labelPadding)
+                                                 y: labelsAbove ? rightHandle.frame.minY - (maxLabelTextSize.height/2) - labelPadding : rightHandle.frame.maxY + (maxLabelTextSize.height/2) + labelPadding)
         
         let newLeftMostXInMaxLabel: CGFloat = newMaxLabelCenter.x - maxLabelTextSize.width / 2.0
         let newRightMostXInMinLabel: CGFloat = newMinLabelCenter.x + minLabelTextSize.width / 2.0
@@ -607,9 +612,9 @@ import UIKit
 
     private func updateFixedLabelPositions() {
         minLabel.position = CGPoint(x: xPositionAlongLine(for: minValue),
-                                    y: sliderLine.frame.minY - (minLabelTextSize.height / 2.0) - (handleDiameter / 2.0) - labelPadding)
+                                    y: labelsAbove ? sliderLine.frame.minY - (minLabelTextSize.height / 2.0) - (handleDiameter / 2.0) - labelPadding : sliderLine.frame.maxY + (minLabelTextSize.height / 2.0) + (handleDiameter / 2.0) + labelPadding)
         maxLabel.position = CGPoint(x: xPositionAlongLine(for: maxValue),
-                                    y: sliderLine.frame.minY - (maxLabelTextSize.height / 2.0) - (handleDiameter / 2.0) - labelPadding)
+                                    y: labelsAbove ? sliderLine.frame.minY - (maxLabelTextSize.height / 2.0) - (handleDiameter / 2.0) - labelPadding : sliderLine.frame.maxY + (maxLabelTextSize.height / 2.0) + (handleDiameter / 2.0) + labelPadding)
         if minLabel.frame.minX < 0.0 {
             minLabel.frame.origin.x = 0.0
         }
