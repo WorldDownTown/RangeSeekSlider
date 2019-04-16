@@ -176,6 +176,9 @@ import UIKit
         }
     }
 
+    /// Handle offset (default (x:0, y:0))
+    @IBInspectable open var handleOffset: CGPoint = CGPoint(x: 0, y: 0)
+    
     /// Handle diameter (default 16.0)
     @IBInspectable open var handleDiameter: CGFloat = 16.0 {
         didSet {
@@ -537,11 +540,11 @@ import UIKit
     }
 
     private func updateHandlePositions() {
-        leftHandle.position = CGPoint(x: xPositionAlongLine(for: selectedMinValue),
-                                      y: sliderLine.frame.midY)
+        leftHandle.position = CGPoint(x: xPositionAlongLine(for: selectedMinValue) + handleOffset.x,
+                                      y: sliderLine.frame.midY + handleOffset.y)
 
-        rightHandle.position = CGPoint(x: xPositionAlongLine(for: selectedMaxValue),
-                                       y: sliderLine.frame.midY)
+        rightHandle.position = CGPoint(x: xPositionAlongLine(for: selectedMaxValue) + handleOffset.x,
+                                       y: sliderLine.frame.midY + handleOffset.y)
 
         // positioning for the dist slider line
         sliderLineBetweenHandles.frame = CGRect(x: leftHandle.position.x,

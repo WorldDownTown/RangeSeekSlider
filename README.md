@@ -117,6 +117,9 @@ If `enableStep` is `true`, this controls the value of each step. E.g. if this va
 #### `handleImage`
 If set the image passed will be used for the handles.
 
+#### `handleOffset`
+If set it will add an offset to the the handles. Default is `x:0, y:0`.
+
 #### `handleDiameter`
 If set it will update the size of the handles. Default is `16.0`.
 
