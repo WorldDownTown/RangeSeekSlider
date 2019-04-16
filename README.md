@@ -74,7 +74,10 @@ Each handle in the slider has a label above it showing the current selected valu
 When set to `true` the labels above the slider controls will be hidden. Default is `false`.
 
 #### `labelsFixed`
-Fixes the labels above the slider controls. If `true`, labels will be fixed to both ends. Otherwise labels will move with the handles. Default is `false`.
+Fixes the labels on the edges of the slider controls. If `true`, labels will be fixed to both ends. Otherwise labels will move with the handles. Default is `false`.
+
+#### `labelsAbove`
+Render the labels above the slider control. If `true`, labels wil be above the slider. Otherwise labels will be below. Default is `false`.
 
 #### `minDistance`
 The minimum distance the two selected slider values must be apart. Default is `0.0`.
