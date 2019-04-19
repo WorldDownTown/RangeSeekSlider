@@ -202,6 +202,38 @@ import UIKit
         }
     }
 
+    /// Handle shadow radius (default 0.0)
+    @IBInspectable open var handleShadowRadius: CGFloat = 0.0 {
+        didSet {
+            leftHandle.shadowRadius = handleShadowRadius
+            rightHandle.shadowRadius = handleShadowRadius
+        }
+    }
+
+    /// Handle shadow opacity (default 0.0)
+    @IBInspectable open var handleShadowOpacity: Float = 0.0 {
+        didSet {
+            leftHandle.shadowOpacity = handleShadowOpacity
+            rightHandle.shadowOpacity = handleShadowOpacity
+        }
+    }
+
+    /// Handle shadow offset (default CGSize.zero)
+    @IBInspectable open var handleShadowOffset: CGSize = .zero {
+        didSet {
+            leftHandle.shadowOffset = handleShadowOffset
+            rightHandle.shadowOffset = handleShadowOffset
+        }
+    }
+
+    /// Handle shadow color
+    @IBInspectable open var handleShadowColor: UIColor? {
+        didSet {
+            leftHandle.shadowColor = handleShadowColor?.cgColor
+            rightHandle.shadowColor = handleShadowColor?.cgColor
+        }
+    }
+
     /// Set padding between label and handle (default 8.0)
     @IBInspectable open var labelPadding: CGFloat = 8.0 {
         didSet {
