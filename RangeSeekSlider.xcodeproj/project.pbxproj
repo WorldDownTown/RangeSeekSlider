@@ -7,13 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E4EAED223865B9100BBDFBD /* RangeSeekSliderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4EAECF23865B9100BBDFBD /* RangeSeekSliderDelegate.swift */; };
+		0E4EAED323865B9100BBDFBD /* RangeSeekSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4EAED023865B9100BBDFBD /* RangeSeekSlider.swift */; };
+		0E4EAED423865B9100BBDFBD /* TapticEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4EAED123865B9100BBDFBD /* TapticEngine.swift */; };
 		CE00D96E1E7AA99A0032CA93 /* CustomRangeSeekSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE00D96D1E7AA99A0032CA93 /* CustomRangeSeekSlider.swift */; };
-		CE1967FE1E7668A300DBAE72 /* RangeSeekSlider.swift in Headers */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* RangeSeekSlider.swift */; settings = {ATTRIBUTES = (Public, ); }; };
-		CE2FEE5A1E7A639C00D396B5 /* RangeSeekSliderDelegate.swift in Headers */ = {isa = PBXBuildFile; fileRef = CE3D49B51E712B840071E992 /* RangeSeekSliderDelegate.swift */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE3D49AF1E7121990071E992 /* RangeSeekSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* RangeSeekSlider.framework */; };
 		CE3D49B01E7121990071E992 /* RangeSeekSlider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* RangeSeekSlider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CE3D49B61E712B840071E992 /* RangeSeekSliderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D49B51E712B840071E992 /* RangeSeekSliderDelegate.swift */; };
-		CEBD453C1E9A42E4001AF6DF /* TapticEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBD453B1E9A42E4001AF6DF /* TapticEngine.swift */; };
 		CED789241E75A57B00900B25 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED789231E75A57B00900B25 /* CoreGraphics.framework */; };
 		CED789261E75A58100900B25 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED789251E75A58100900B25 /* UIKit.framework */; };
 		CEF0136C1E72674F00DCF3D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEF273E41E7023F7003AA995 /* Assets.xcassets */; };
@@ -21,7 +20,6 @@
 		CEF273ED1E70241B003AA995 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEF273EA1E702405003AA995 /* Main.storyboard */; };
 		CEF273EE1E702421003AA995 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF273E21E7023ED003AA995 /* AppDelegate.swift */; };
 		CEF273EF1E702424003AA995 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF273E61E7023F7003AA995 /* ViewController.swift */; };
-		OBJ_21 /* RangeSeekSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* RangeSeekSlider.swift */; };
 		OBJ_28 /* RangeSeekSliderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* RangeSeekSliderTests.swift */; };
 		OBJ_30 /* RangeSeekSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* RangeSeekSlider.framework */; };
 /* End PBXBuildFile section */
@@ -58,11 +56,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0E4EAECF23865B9100BBDFBD /* RangeSeekSliderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSeekSliderDelegate.swift; sourceTree = "<group>"; };
+		0E4EAED023865B9100BBDFBD /* RangeSeekSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSeekSlider.swift; sourceTree = "<group>"; };
+		0E4EAED123865B9100BBDFBD /* TapticEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapticEngine.swift; sourceTree = "<group>"; };
 		CE00D96D1E7AA99A0032CA93 /* CustomRangeSeekSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomRangeSeekSlider.swift; path = Demo/RangeSeekSliderDemo/CustomRangeSeekSlider.swift; sourceTree = SOURCE_ROOT; };
-		CE3D49B51E712B840071E992 /* RangeSeekSliderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSeekSliderDelegate.swift; sourceTree = "<group>"; };
 		CE3D49B81E71409A0071E992 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CE9937551E70236800EA982A /* RangeSeekSliderDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RangeSeekSliderDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEBD453B1E9A42E4001AF6DF /* TapticEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapticEngine.swift; sourceTree = "<group>"; };
 		CED789231E75A57B00900B25 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		CED789251E75A58100900B25 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CEF273E21E7023ED003AA995 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Demo/RangeSeekSliderDemo/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
@@ -74,7 +73,6 @@
 		OBJ_12 /* RangeSeekSliderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeSeekSliderTests.swift; sourceTree = "<group>"; };
 		OBJ_14 /* RangeSeekSlider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RangeSeekSlider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_15 /* RangeSeekSliderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = RangeSeekSliderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		OBJ_9 /* RangeSeekSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeSeekSlider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +104,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E4EAECE23865B9100BBDFBD /* RangeSeekSlider */ = {
+			isa = PBXGroup;
+			children = (
+				0E4EAECF23865B9100BBDFBD /* RangeSeekSliderDelegate.swift */,
+				0E4EAED023865B9100BBDFBD /* RangeSeekSlider.swift */,
+				0E4EAED123865B9100BBDFBD /* TapticEngine.swift */,
+			);
+			path = RangeSeekSlider;
+			sourceTree = "<group>";
+		};
 		CE3D49B71E7140990071E992 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -180,21 +188,10 @@
 		OBJ_7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_8 /* RangeSeekSlider */,
+				0E4EAECE23865B9100BBDFBD /* RangeSeekSlider */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
-		};
-		OBJ_8 /* RangeSeekSlider */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_9 /* RangeSeekSlider.swift */,
-				CE3D49B51E712B840071E992 /* RangeSeekSliderDelegate.swift */,
-				CEBD453B1E9A42E4001AF6DF /* TapticEngine.swift */,
-			);
-			name = RangeSeekSlider;
-			path = Sources;
-			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -203,8 +200,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE1967FE1E7668A300DBAE72 /* RangeSeekSlider.swift in Headers */,
-				CE2FEE5A1E7A639C00D396B5 /* RangeSeekSliderDelegate.swift in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,10 +329,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_21 /* RangeSeekSlider.swift in Sources */,
-				CEBD453C1E9A42E4001AF6DF /* TapticEngine.swift in Sources */,
-				CE3D49B61E712B840071E992 /* RangeSeekSliderDelegate.swift in Sources */,
+				0E4EAED423865B9100BBDFBD /* TapticEngine.swift in Sources */,
 				CE00D96E1E7AA99A0032CA93 /* CustomRangeSeekSlider.swift in Sources */,
+				0E4EAED223865B9100BBDFBD /* RangeSeekSliderDelegate.swift in Sources */,
+				0E4EAED323865B9100BBDFBD /* RangeSeekSlider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
