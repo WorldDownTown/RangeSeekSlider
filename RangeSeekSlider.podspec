@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                  = 'RangeSeekSlider'
-  s.version               = '1.8.0'
+  s.version               = '1.8.1'
   s.summary               = 'RangeSeekSlider provides a customizable range slider like a UISlider.'
   s.description           = <<-DESC
                             RangeSeekSlider provides a customizable range slider like a UISlider.
@@ -13,6 +13,6 @@ Pod::Spec.new do |s|
   s.source                = { git: 'https://github.com/WorldDownTown/RangeSeekSlider.git', tag: s.version.to_s }
   s.social_media_url      = 'https://twitter.com/WorldDownTown'
   s.ios.deployment_target = '9.0'
-  s.source_files          = 'Sources/*.swift'
+  s.source_files          = 'Sources/RangeSeekSlider/*.swift'
   s.frameworks            = ['CoreGraphics', 'UIKit']
 end
