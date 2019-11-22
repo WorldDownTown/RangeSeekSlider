@@ -223,6 +223,7 @@ import UIKit
 
 
     // MARK: - private stored properties
+    private var startLocation: CGPoint? = nil
 
     private enum HandleTracking { case none, left, right }
     private var handleTracking: HandleTracking = .none
@@ -307,15 +308,22 @@ import UIKit
         let distanceFromLeftHandle: CGFloat = touchLocation.distance(to: leftHandle.frame.center)
         let distanceFromRightHandle: CGFloat = touchLocation.distance(to: rightHandle.frame.center)
 
-        if distanceFromLeftHandle < distanceFromRightHandle && !disableRange {
+        // Set tracking to none when selected values are exactly the same to prevent weird required user interaction
+        if selectedMinValue == selectedMaxValue {
+            handleTracking = .none
+            startLocation = touchLocation
+        } else if distanceFromLeftHandle < distanceFromRightHandle && !disableRange {
             handleTracking = .left
         } else if selectedMaxValue == maxValue && leftHandle.frame.midX == rightHandle.frame.midX {
             handleTracking = .left
         } else {
             handleTracking = .right
         }
-        let handle: CALayer = (handleTracking == .left) ? leftHandle : rightHandle
-        animate(handle: handle, selected: true)
+        // Only animate when tracking handle is known
+        if handleTracking != .none {
+            let handle: CALayer = (handleTracking == .left) ? leftHandle : rightHandle
+            animate(handle: handle, selected: true)
+        }
 
         delegate?.didStartTouches(in: self)
 
@@ -323,9 +331,18 @@ import UIKit
     }
 
     open override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-        guard handleTracking != .none else { return false }
-
         let location: CGPoint = touch.location(in: self)
+        // When tracking is none find slider according to touch direction
+        if handleTracking == .none,
+            let startLocation = startLocation {
+            if location.x <  startLocation.x {
+                handleTracking = .left
+            } else {
+                handleTracking = .right
+            }
+            let handle: CALayer = (handleTracking == .left) ? leftHandle : rightHandle
+            animate(handle: handle, selected: true)
+        }
 
         // find out the percentage along the line we are in x coordinate terms (subtracting half the frames width to account for moving the middle of the handle, not the left hand side)
         let percentage: CGFloat = (location.x - sliderLine.frame.minX - handleDiameter / 2.0) / (sliderLine.frame.maxX - sliderLine.frame.minX)
