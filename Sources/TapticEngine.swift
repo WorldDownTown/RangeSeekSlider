@@ -29,11 +29,9 @@ open class TapticEngine {
         }
 
         private var style: ImpactStyle = .light
-        private var generator: Any? = Impact.makeGenerator(.light)
+        private var generator: UIImpactFeedbackGenerator = Impact.makeGenerator(.light)
 
-        private static func makeGenerator(_ style: ImpactStyle) -> Any? {
-            guard #available(iOS 10.0, *) else { return nil }
-
+        private static func makeGenerator(_ style: ImpactStyle) -> UIImpactFeedbackGenerator {
             let feedbackStyle: UIImpactFeedbackGenerator.FeedbackStyle
             switch style {
             case .light:
@@ -43,7 +41,7 @@ open class TapticEngine {
             case .heavy:
                 feedbackStyle = .heavy
             }
-            let generator: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: feedbackStyle)
+            let generator = UIImpactFeedbackGenerator(style: feedbackStyle)
             generator.prepare()
             return generator
         }
@@ -55,23 +53,13 @@ open class TapticEngine {
         }
 
         public func feedback(_ style: ImpactStyle) {
-            guard #available(iOS 10.0, *) else { return }
-
             updateGeneratorIfNeeded(style)
-
-            guard let generator = generator as? UIImpactFeedbackGenerator else { return }
-
             generator.impactOccurred()
             generator.prepare()
         }
 
         public func prepare(_ style: ImpactStyle) {
-            guard #available(iOS 10.0, *) else { return }
-
             updateGeneratorIfNeeded(style)
-
-            guard let generator = generator as? UIImpactFeedbackGenerator else { return }
-
             generator.prepare()
         }
     }
@@ -80,26 +68,18 @@ open class TapticEngine {
     /// Wrapper of `UISelectionFeedbackGenerator`
     open class Selection {
 
-        private var generator: Any? = {
-            guard #available(iOS 10.0, *) else { return nil }
-
-            let generator: UISelectionFeedbackGenerator = UISelectionFeedbackGenerator()
+        private var generator: UISelectionFeedbackGenerator = {
+            let generator = UISelectionFeedbackGenerator()
             generator.prepare()
             return generator
         }()
 
         public func feedback() {
-            guard #available(iOS 10.0, *) else { return }
-            guard let generator = generator as? UISelectionFeedbackGenerator else { return }
-
             generator.selectionChanged()
             generator.prepare()
         }
 
         public func prepare() {
-            guard #available(iOS 10.0, *) else { return }
-            guard let generator = generator as? UISelectionFeedbackGenerator else { return }
-
             generator.prepare()
         }
     }
@@ -117,18 +97,13 @@ open class TapticEngine {
             case success, warning, error
         }
 
-        private var generator: Any? = {
-            guard #available(iOS 10.0, *) else { return nil }
-
-            let generator: UINotificationFeedbackGenerator = UINotificationFeedbackGenerator()
+        private var generator: UINotificationFeedbackGenerator = {
+            let generator = UINotificationFeedbackGenerator()
             generator.prepare()
             return generator
         }()
 
         public func feedback(_ type: NotificationType) {
-            guard #available(iOS 10.0, *) else { return }
-            guard let generator = generator as? UINotificationFeedbackGenerator else { return }
-
             let feedbackType: UINotificationFeedbackGenerator.FeedbackType
             switch type {
             case .success:
@@ -143,9 +118,6 @@ open class TapticEngine {
         }
 
         public func prepare() {
-            guard #available(iOS 10.0, *) else { return }
-            guard let generator = generator as? UINotificationFeedbackGenerator else { return }
-
             generator.prepare()
         }
     }
