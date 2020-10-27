@@ -10,7 +10,7 @@ let package = Package(
         .target(
             name: "RangeSeekSlider",
             dependencies: [],
-            path: "../Sources/"
+            path: ".."
         )
     ]
 )
