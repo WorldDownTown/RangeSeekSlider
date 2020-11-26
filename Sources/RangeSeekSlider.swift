@@ -151,6 +151,9 @@ import UIKit
 
     /// If true the control will snap to point at each step between minValue and maxValue. Default is false.
     @IBInspectable open var enableStep: Bool = false
+    
+    /// If true the control will snap to point at each step between minValue and maxValue. Default is false.
+    @IBInspectable open var fixedRangeValue: CGFloat = 0.0
 
     /// The step value, this control the value of each step. If not set the default is 0.0.
     /// (note: this is ignored if <= 0.0)
@@ -336,12 +339,24 @@ import UIKit
         switch handleTracking {
         case .left:
             selectedMinValue = min(selectedValue, selectedMaxValue)
+            if(self.fixedRangeValue != 0)
+            {
+                if disableRange && selectedValue >= minValue {
+                    selectedMaxValue = selectedValue+self.fixedRangeValue
+                } else {
+                    selectedMaxValue = max(selectedValue+self.fixedRangeValue, selectedMinValue)
+                }
+            }
         case .right:
             // don't let the dots cross over, (unless range is disabled, in which case just dont let the dot fall off the end of the screen)
             if disableRange && selectedValue >= minValue {
                 selectedMaxValue = selectedValue
             } else {
                 selectedMaxValue = max(selectedValue, selectedMinValue)
+            }
+            if(self.fixedRangeValue != 0)
+            {
+                selectedMinValue = min(selectedValue-self.fixedRangeValue, selectedMaxValue)
             }
         case .none:
             // no need to refresh the view because it is done as a side-effect of setting the property
