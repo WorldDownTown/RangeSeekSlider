@@ -1,14 +1,15 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.3
 import PackageDescription
 
 let package = Package(
   name: "RangeSeekSlider",
-  platforms: [.iOS(.v10)],
+  platforms: [
+    .iOS(.v10)
+  ],
   products: [
     .library(name: "RangeSeekSlider", targets: ["RangeSeekSlider"])
   ],
   targets: [
     .target(name: "RangeSeekSlider", path: "Sources")
-  ],
-  swiftLanguageVersions: [.v5]
+  ]
 )
