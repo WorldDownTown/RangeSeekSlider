@@ -353,6 +353,15 @@ import UIKit
         delegate?.didEndTouches(in: self)
     }
 
+    // See: https://github.com/WorldDownTown/RangeSeekSlider/issues/92#issuecomment-626794537
+    open override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if let panGestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer {
+            let velocity = panGestureRecognizer.velocity(in: self)
+            return abs(velocity.y) > abs(velocity.x)
+        }
+        return true
+    }
+
 
     // MARK: - UIAccessibility
 
