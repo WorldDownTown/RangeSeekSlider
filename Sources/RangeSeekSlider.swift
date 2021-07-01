@@ -12,23 +12,15 @@ import UIKit
 
     // MARK: - initializers
 
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-
-        setup()
-    }
-
-    public required override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
-
         setup()
     }
 
-    public convenience init(frame: CGRect = .zero, completion: ((RangeSeekSlider) -> Void)? = nil) {
-        self.init(frame: frame)
-        completion?(self)
+    public required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setup()
     }
-
 
     // MARK: - open stored properties
 
