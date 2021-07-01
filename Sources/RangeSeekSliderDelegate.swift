@@ -42,7 +42,7 @@ public protocol RangeSeekSliderDelegate: AnyObject {
     ///   - slider: RangeSeekSlider
     ///   - maxValue: maximum value
     /// - Returns: String to be replaced
-    func rangeSeekSlider(_ slider: RangeSeekSlider, stringForMaxValue: CGFloat) -> String?
+    func rangeSeekSlider(_ slider: RangeSeekSlider, stringForMaxValue maxValue: CGFloat) -> String?
 }
 
 
