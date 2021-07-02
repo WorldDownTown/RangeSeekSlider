@@ -337,7 +337,7 @@ import UIKit
         let location: CGPoint = touch.location(in: self)
 
         // find out the percentage along the line we are in x coordinate terms (subtracting half the frames width to account for moving the middle of the handle, not the left hand side)
-        let percentage: CGFloat = (location.x - sliderLine.frame.minX - handleDiameter / 2.0) / (sliderLine.frame.maxX - sliderLine.frame.minX)
+        let percentage: CGFloat = (location.x - sliderLine.frame.minX - handleDiameter / 2.0) / (sliderLine.frame.width - handleDiameter)
 
         // multiply that percentage by self.maxValue to get the new selected minimum value
         let selectedValue: CGFloat = percentage * (maxValue - minValue) + minValue
@@ -468,12 +468,12 @@ import UIKit
         let percentage: CGFloat = percentageAlongLine(for: value)
 
         // get the difference between the maximum and minimum coordinate position x values (e.g if max was x = 310, and min was x=10, difference is 300)
-        let maxMinDif: CGFloat = sliderLine.frame.maxX - sliderLine.frame.minX
+        let maxMinDif = sliderLine.frame.width - handleDiameter
 
         // now multiply the percentage by the minMaxDif to see how far along the line the point should be, and add it onto the minimum x position.
         let offset: CGFloat = percentage * maxMinDif
 
-        return sliderLine.frame.minX + offset
+        return sliderLine.frame.minX + handleDiameter / 2 + offset
     }
 
     private func updateLineHeight() {
