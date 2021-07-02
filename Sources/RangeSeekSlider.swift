@@ -211,6 +211,13 @@ import UIKit
         }
     }
 
+    /// Set padding on left and right side of slider line (default 16.0)
+    @IBInspectable open var barSidePadding: CGFloat = 16.0 {
+        didSet {
+            updateLabelPositions()
+        }
+    }
+
     /// The label displayed in accessibility mode for minimum value handler. If not set, the default is empty String.
     @IBInspectable open var minLabelAccessibilityLabel: String?
 
@@ -470,7 +477,6 @@ import UIKit
     }
 
     private func updateLineHeight() {
-        let barSidePadding: CGFloat = 16.0
         let yMiddle: CGFloat = (frame.height - lineHeight) / 2.0
         let lineLeftSide: CGPoint = CGPoint(x: barSidePadding, y: yMiddle)
         let lineRightSide: CGPoint = CGPoint(x: frame.width - barSidePadding,
