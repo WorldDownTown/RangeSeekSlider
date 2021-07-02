@@ -26,6 +26,11 @@ import UIKit
 
     open weak var delegate: RangeSeekSliderDelegate?
 
+    open var range: ClosedRange<CGFloat> {
+        @inlinable get { minValue...maxValue }
+        @inlinable set { (minValue, maxValue) = (newValue.lowerBound, newValue.upperBound) }
+    }
+
     /// The minimum possible value to select in the range
     @IBInspectable open var minValue: CGFloat = 0.0 {
         didSet {
@@ -38,6 +43,11 @@ import UIKit
         didSet {
             refresh()
         }
+    }
+
+    open var selectedRange: ClosedRange<CGFloat> {
+        @inlinable get { selectedMinValue...selectedMaxValue }
+        @inlinable set { (selectedMinValue, selectedMaxValue) = (newValue.lowerBound, newValue.upperBound) }
     }
 
     /// The preselected minumum value
