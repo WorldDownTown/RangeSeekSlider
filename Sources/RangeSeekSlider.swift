@@ -303,6 +303,13 @@ import UIKit
 
     // MARK: - UIControl
 
+    // See: https://github.com/TomThorpe/TTRangeSlider/commit/217eef24322b6a44009b14db157d266656e88284
+    open override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        // kill any gestures when we're tracking a touch that started on one of the handles. This ensures the correct behaviour when
+        // the superview is something like a scrollview that can accepts touches in the same area as the slider thats placed on that view.
+        return !isTracking
+    }
+
     open override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         let touchLocation: CGPoint = touch.location(in: self)
         let insetExpansion: CGFloat = -30.0
@@ -363,20 +370,20 @@ import UIKit
     }
 
     open override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
+        super.endTracking(touch, with: event)
+        cleanupTouch()
+    }
+
+    open override func cancelTracking(with event: UIEvent?) {
+        super.cancelTracking(with: event)
+        cleanupTouch()
+    }
+
+    private func cleanupTouch() {
         let handle: CALayer = (handleTracking == .left) ? leftHandle : rightHandle
         animate(handle: handle, selected: false)
         handleTracking = .none
-
         delegate?.didEndTouches(in: self)
-    }
-
-    // See: https://github.com/WorldDownTown/RangeSeekSlider/issues/92#issuecomment-626794537
-    open override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        if let panGestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer {
-            let velocity = panGestureRecognizer.velocity(in: self)
-            return abs(velocity.y) > abs(velocity.x)
-        }
-        return true
     }
 
 
