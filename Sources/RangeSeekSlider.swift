@@ -232,8 +232,8 @@ import UIKit
     private let sliderLine: CALayer = CALayer()
     private let sliderLineBetweenHandles: CALayer = CALayer()
 
-    private let leftHandle: CAShapeLayer = CAShapeLayer()
-    private let rightHandle: CAShapeLayer = CAShapeLayer()
+    public let leftHandle: CAShapeLayer = CAShapeLayer()
+    public let rightHandle: CAShapeLayer = CAShapeLayer()
 
     fileprivate let minLabel: CATextLayer = CATextLayer()
     fileprivate let maxLabel: CATextLayer = CATextLayer()
