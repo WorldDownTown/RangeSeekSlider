@@ -471,7 +471,7 @@ import UIKit
 
     private func updateLineHeight() {
         let barSidePadding: CGFloat = 16.0
-        let yMiddle: CGFloat = frame.height / 2.0
+        let yMiddle: CGFloat = (frame.height - lineHeight) / 2.0
         let lineLeftSide: CGPoint = CGPoint(x: barSidePadding, y: yMiddle)
         let lineRightSide: CGPoint = CGPoint(x: frame.width - barSidePadding,
                                              y: yMiddle)
