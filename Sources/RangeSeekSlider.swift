@@ -12,27 +12,24 @@ import UIKit
 
     // MARK: - initializers
 
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-
-        setup()
-    }
-
-    public required override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
-
         setup()
     }
 
-    public convenience init(frame: CGRect = .zero, completion: ((RangeSeekSlider) -> Void)? = nil) {
-        self.init(frame: frame)
-        completion?(self)
+    public required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setup()
     }
-
 
     // MARK: - open stored properties
 
     open weak var delegate: RangeSeekSliderDelegate?
+
+    open var range: ClosedRange<CGFloat> {
+        @inlinable get { minValue...maxValue }
+        @inlinable set { (minValue, maxValue) = (newValue.lowerBound, newValue.upperBound) }
+    }
 
     /// The minimum possible value to select in the range
     @IBInspectable open var minValue: CGFloat = 0.0 {
@@ -46,6 +43,11 @@ import UIKit
         didSet {
             refresh()
         }
+    }
+
+    open var selectedRange: ClosedRange<CGFloat> {
+        @inlinable get { selectedMinValue...selectedMaxValue }
+        @inlinable set { (selectedMinValue, selectedMaxValue) = (newValue.lowerBound, newValue.upperBound) }
     }
 
     /// The preselected minumum value
@@ -209,6 +211,13 @@ import UIKit
         }
     }
 
+    /// Set padding on left and right side of slider line (default 16.0)
+    @IBInspectable open var barSidePadding: CGFloat = 16.0 {
+        didSet {
+            updateLabelPositions()
+        }
+    }
+
     /// The label displayed in accessibility mode for minimum value handler. If not set, the default is empty String.
     @IBInspectable open var minLabelAccessibilityLabel: String?
 
@@ -230,8 +239,8 @@ import UIKit
     private let sliderLine: CALayer = CALayer()
     private let sliderLineBetweenHandles: CALayer = CALayer()
 
-    private let leftHandle: CALayer = CALayer()
-    private let rightHandle: CALayer = CALayer()
+    public let leftHandle: CAShapeLayer = CAShapeLayer()
+    public let rightHandle: CAShapeLayer = CAShapeLayer()
 
     fileprivate let minLabel: CATextLayer = CATextLayer()
     fileprivate let maxLabel: CATextLayer = CATextLayer()
@@ -294,6 +303,13 @@ import UIKit
 
     // MARK: - UIControl
 
+    // See: https://github.com/TomThorpe/TTRangeSlider/commit/217eef24322b6a44009b14db157d266656e88284
+    open override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        // kill any gestures when we're tracking a touch that started on one of the handles. This ensures the correct behaviour when
+        // the superview is something like a scrollview that can accepts touches in the same area as the slider thats placed on that view.
+        return !isTracking
+    }
+
     open override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         let touchLocation: CGPoint = touch.location(in: self)
         let insetExpansion: CGFloat = -30.0
@@ -328,7 +344,7 @@ import UIKit
         let location: CGPoint = touch.location(in: self)
 
         // find out the percentage along the line we are in x coordinate terms (subtracting half the frames width to account for moving the middle of the handle, not the left hand side)
-        let percentage: CGFloat = (location.x - sliderLine.frame.minX - handleDiameter / 2.0) / (sliderLine.frame.maxX - sliderLine.frame.minX)
+        let percentage: CGFloat = (location.x - sliderLine.frame.minX - handleDiameter / 2.0) / (sliderLine.frame.width - handleDiameter)
 
         // multiply that percentage by self.maxValue to get the new selected minimum value
         let selectedValue: CGFloat = percentage * (maxValue - minValue) + minValue
@@ -354,10 +370,19 @@ import UIKit
     }
 
     open override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
+        super.endTracking(touch, with: event)
+        cleanupTouch()
+    }
+
+    open override func cancelTracking(with event: UIEvent?) {
+        super.cancelTracking(with: event)
+        cleanupTouch()
+    }
+
+    private func cleanupTouch() {
         let handle: CALayer = (handleTracking == .left) ? leftHandle : rightHandle
         animate(handle: handle, selected: false)
         handleTracking = .none
-
         delegate?.didEndTouches(in: self)
     }
 
@@ -450,17 +475,16 @@ import UIKit
         let percentage: CGFloat = percentageAlongLine(for: value)
 
         // get the difference between the maximum and minimum coordinate position x values (e.g if max was x = 310, and min was x=10, difference is 300)
-        let maxMinDif: CGFloat = sliderLine.frame.maxX - sliderLine.frame.minX
+        let maxMinDif = sliderLine.frame.width - handleDiameter
 
         // now multiply the percentage by the minMaxDif to see how far along the line the point should be, and add it onto the minimum x position.
         let offset: CGFloat = percentage * maxMinDif
 
-        return sliderLine.frame.minX + offset
+        return sliderLine.frame.minX + handleDiameter / 2 + offset
     }
 
     private func updateLineHeight() {
-        let barSidePadding: CGFloat = 16.0
-        let yMiddle: CGFloat = frame.height / 2.0
+        let yMiddle: CGFloat = (frame.height - lineHeight) / 2.0
         let lineLeftSide: CGPoint = CGPoint(x: barSidePadding, y: yMiddle)
         let lineRightSide: CGPoint = CGPoint(x: frame.width - barSidePadding,
                                              y: yMiddle)
@@ -621,20 +645,20 @@ import UIKit
 
     fileprivate func refresh() {
         if enableStep && step > 0.0 {
-            selectedMinValue = CGFloat(roundf(Float(selectedMinValue / step))) * step
+            selectedMinValue = round(selectedMinValue / step) * step
             if let previousStepMinValue = previousStepMinValue, previousStepMinValue != selectedMinValue {
                 TapticEngine.selection.feedback()
             }
             previousStepMinValue = selectedMinValue
 
-            selectedMaxValue = CGFloat(roundf(Float(selectedMaxValue / step))) * step
+            selectedMaxValue = round(selectedMaxValue / step) * step
             if let previousStepMaxValue = previousStepMaxValue, previousStepMaxValue != selectedMaxValue {
                 TapticEngine.selection.feedback()
             }
             previousStepMaxValue = selectedMaxValue
         }
 
-        let diff: CGFloat = selectedMaxValue - selectedMinValue
+        let diff = selectedMaxValue - selectedMinValue
 
         if diff < minDistance {
             switch handleTracking {
